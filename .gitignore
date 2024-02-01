@@ -8,10 +8,6 @@ __pycache__
 # External/private cogs
 cogs_external/
 
-# Data
-*.db
-data/
-
 # VS Code
 .vscode
 
