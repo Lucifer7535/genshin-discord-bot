@@ -13,7 +13,7 @@ class Dropdown(discord.ui.Select):
     def __init__(self, notices: Sequence[genshin.models.Announcement], placeholder: str):
         self.notices = notices
         options = [
-            discord.SelectOption(label=notice.subtitle, description=notice.title, value=str(i))
+            discord.SelectOption(label=notice.subtitle[:96]+"...", description=notice.title[:96]+"...", value=str(i))
             for i, notice in enumerate(notices)
         ]
         super().__init__(placeholder=placeholder, options=options[:25])
