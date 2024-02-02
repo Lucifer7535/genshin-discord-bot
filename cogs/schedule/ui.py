@@ -118,34 +118,34 @@ class BaseNotesThresholdModal(discord.ui.Modal):
 
 class GenshinNotesThresholdModal(BaseNotesThresholdModal, title="Set Genshin Impact Instant Reminder"):
     resin: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Original Resin: Set hours when resin gets full for reminder (Leave blank for no reminder)",
+        label="Original Resin",
         placeholder="Please enter an integer between 0 and 8",
         required=False,
         max_length=1,
 
     )
     realm_currency: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Realm Currency: Set hours when realm currency gets full for reminder (Leave blank for no reminder)",
+        label="Realm Currency",
         placeholder="Please enter an integer between 0 and 24",
         required=False,
         max_length=2,
     )
     transformer: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Transformer: Set hours when parametric transformer gets reset for reminder (Leave blank for no reminder)",
+        label="Parametric Transformer",
         placeholder="Please enter an integer between 0 and 5",
         required=False,
         max_length=1,   
     )
 
     expedition: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Expedition: Set hours when all expeditions are completed for reminder (Leave blank for no reminder)",
+        label="Expedition",
         placeholder="Please enter an integer between 0 and 5",
         required=False,
         max_length=1,
     )
 
     commission: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Daily Commission: Set the time to remind about incomplete daily missions (Leave blank for no reminder)",
+        label="Daily Commissions",
         placeholder="Please enter a time between 0000 and 2359, for example, 0200, 2135",
         required=False,
         max_length=4,
