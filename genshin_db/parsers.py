@@ -51,7 +51,7 @@ class TCGCardParser:
     @classmethod
     def parse_character_card(cls, card: CharacterCard) -> discord.Embed:
 
-        embed = EmbedTemplate.normal(card.story_text, title=card.name)
+        embed = EmbedTemplate.normal(card.story_text or " ", title=card.name)
         embed.set_image(url=card.image_url)
         for talent in card.talents:
             _value = "Cost: " + cls._parse_costs(talent.costs) + "\n"
@@ -130,7 +130,9 @@ class EquipmentParser:
     @classmethod
     def parse_weapon(cls, weapon: Weapon) -> discord.Embed:
 
-        description = f"Base Attack: {weapon.base_atk}\nMain Stat: {weapon.mainstat}+{weapon.mainvalue}\n"
+        description = (
+            f"Base Attack: {weapon.base_atk}\nMain Attribute: {weapon.mainstat}+{weapon.mainvalue}\n"
+        )
         embed = EmbedTemplate.normal(description, title=f"★{weapon.rarity} {weapon.name}")
         embed.add_field(name=weapon.effect_name, value=weapon.effect_desciption)
         embed.set_thumbnail(
@@ -190,10 +192,12 @@ class CharacterParser:
         embed.add_field(name=talent.combat1.name, value=talent.combat1.description)
         embed.add_field(name="E: " + talent.combat2.name, value=talent.combat2.description)
         embed.add_field(name="Q: " + talent.combat3.name, value=talent.combat3.description)
-        embed.add_field(name="Innate: " + talent.passive1.name, value=talent.passive1.description)
-        embed.add_field(name="Innate: " + talent.passive2.name, value=talent.passive2.description)
+        embed.add_field(name="talent 1: " + talent.passive1.name, value=talent.passive1.description)
+        embed.add_field(name="talent 2: " + talent.passive2.name, value=talent.passive2.description)
         if talent.passive3 is not None:
-            embed.add_field(name="Innate: " + talent.passive3.name, value=talent.passive3.description)
+            embed.add_field(
+                name="talent 3：" + talent.passive3.name, value=talent.passive3.description
+            )
         return embed
 
     @classmethod
@@ -222,7 +226,9 @@ class MaterialParser:
             embed.add_field(name="Perfect Dish", value=food.delicious.effect)
         embed.add_field(
             name="Attributes",
-            value=f"Rarity: {food.rarity}\n" + f"Type: {food.food_type}\n" + f"Effect: {food.effect}\n",
+            value=f"Rarity：{food.rarity}\n"
+            + f"Type：{food.food_type}\n"
+            + f"Effect：{food.effect}\n",
         )
         embed.add_field(
             name="Ingredients",

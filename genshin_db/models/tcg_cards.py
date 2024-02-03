@@ -31,9 +31,9 @@ class CharacterCard(GenshinDbBase):
     hp: int
     max_energy: int = Field(alias="maxenergy")
     tags: list[str] = Field(alias="tagstext")
-    story_title: str = Field(alias="storytitle")
-    story_text: str = Field(alias="storytext")
-    source: str
+    story_title: str | None = Field(alias="storytitle")
+    story_text: str | None = Field(alias="storytext")
+    source: str | None
     talents: list[Talent] = Field(alias="skills")
     images: Images
     version: str
