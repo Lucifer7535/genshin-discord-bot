@@ -157,7 +157,7 @@ class DailyReward:
         try:
             _id = user.discord_channel_id
             channel = bot.get_channel(_id) or await bot.fetch_channel(_id)
-            if user.is_mention is False:
+            if user.is_mention is False and "Cookie has expired" not in message:
                 _user = await bot.fetch_user(user.discord_id)
                 await channel.send(embed=EmbedTemplate.normal(f"[Automatic Sign-in] {_user.name}: {message}"))
             else:
