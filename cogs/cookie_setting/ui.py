@@ -59,7 +59,7 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
 
     cookie: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
         label="Cookie",
-        placeholder="Leave this field blank unless there are specific requirements. Use it to paste the complete cookie string.",
+        placeholder="Paste complete Cookie. Not Required.",
         style=discord.TextStyle.long,
         required=False,
         min_length=50,

@@ -51,12 +51,11 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
                 "ltoken_v2=xxxx ltuid_v2=1234 ltmid_v2=yyyy"
                 "· The bot saves and uses the Cookie to get your Genshin data on the Hoyolab website and provide services\n"
                 "· The bot stores data in a cloud-hosted environment, only connecting to Discord and Hoyolab servers\n"
-                "· For more detailed information, you can check the [Bahamut Forum Post (in Chinese)](https://forum.gamer.com.tw/Co.php?bsn=36730&sn=162433)."
                 "If you still have concerns, please refrain from using the bot\n"
                 "· When you submit the Cookie to the bot, you agree to the bot storing and using your data\n"
-                f'· You can delete the data stored in the bot at any time. Please use the command {get_app_command_mention("clear-data")}\n'
+                f'· You can delete the data stored in the bot at any time. Please use the command {get_app_command_mention("clear-user-data")}\n'
             )
-            embed = EmbedTemplate.normal(msg, title="Genshin Helper | Cookie Usage and Storage Information")
+            embed = EmbedTemplate.normal(msg, title="Genshin Helper Bot | Cookie Usage and Storage Information")
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
