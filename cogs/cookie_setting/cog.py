@@ -39,7 +39,7 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
         elif option == 1:  # Submit obtained Cookie to the bot
             view = GameSelectionView()
             await interaction.response.send_message(
-                embed=EmbedTemplate.normal("Please choose the game to set the Cookie, different games can have different account Cookies"),
+                embed=EmbedTemplate.normal("Please choose the game to set the Cookie."),
                 view=view,
                 ephemeral=True,
             )
