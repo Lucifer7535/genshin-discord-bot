@@ -29,7 +29,7 @@ async def get_client(
             uid = user.uid_genshin or 0
             cookie = user.cookie_genshin or user.cookie_default
             if str(uid)[0] in ["1", "2", "5"]:
-                client = genshin.Client(region=genshin.Region.CHINESE, lang="zh-cn")
+                client = genshin.Client(region=genshin.Region.CHINESE, lang="en-us")
         case genshin.Game.HONKAI:
             uid = user.uid_honkai3rd or 0
             cookie = user.cookie_honkai3rd or user.cookie_default
@@ -37,7 +37,7 @@ async def get_client(
             uid = user.uid_starrail or 0
             cookie = user.cookie_starrail or user.cookie_default
             if str(uid)[0] in ["1", "2", "5"]:
-                client = genshin.Client(region=genshin.Region.CHINESE, lang="zh-cn")
+                client = genshin.Client(region=genshin.Region.CHINESE, lang="en-us")
         case _:
             uid = 0
             cookie = user.cookie_default

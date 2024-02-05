@@ -4,18 +4,17 @@ from utility.emoji import emoji
 
 
 class Element(enum.Enum):
-
-    CRYO = "CRYO"
-    HYDRO = "HYDRO"
-    PYRO = "PYRO"
-    ELECTRO = "ELECTRO"
-    GEO = "GEO"
-    DENDRO = "DENDRO"
-    ANEMO = "ANEMO"
-    VOID = "VOID"
+    CRYO = "Cryo"
+    HYDRO = "Hydro"
+    PYRO = "Pyro"
+    ELECTRO = "Electro"
+    GEO = "Geo"
+    DENDRO = "Dendro"
+    ANEMO = "Anemo"
+    VOID = "None"
 
     def __str__(self) -> str:
-        return emoji.elements.get(self.name.lower(), str(self.value))
+        return emoji.elements.get(self.name, str(self.value))
 
 
 class CostElement(str, enum.Enum):

@@ -70,7 +70,7 @@ class Character(GenshinDbBase):
 
     @validator("name", pre=True)
     def modify_traveller_name(cls, v: str) -> str:
-        if v == "空" or v == "熒":
+        if v == "Aether" or v == "Lumine":
             return f"Traveler ({v})"
         return v
 

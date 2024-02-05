@@ -19,7 +19,7 @@ class Search(commands.Cog, name="search-data"):
         self.bot = bot
         self.db = genshin_db_data
 
-    @app_commands.command(name="search-data", description="Search the Genshin Impact database, including characters, weapons, items, achievements, and TCG-cards")
+    @app_commands.command(name="search-data", description="Search the Genshin Impact database")
     @app_commands.rename(category="category", item_name="name")
     @app_commands.describe(category="Select the category to search")
     @app_commands.choices(
@@ -50,12 +50,12 @@ class Search(commands.Cog, name="search-data"):
 
                 # Special handling for Traveler with multiple elements
                 if "Traveler" in item_name:
-                    for element in ["Anemo", "Geo", "Electro", "Dendro"]:
-                        talent = self.db.talents.find(f"Traveler ({element} Element)")
+                    for element in ["Anemo", "Geo", "Electro", "Dendro", "Hydro"]:
+                        talent = self.db.talents.find(f"Traveler ({element})")
                         titles.append(f"Talent: {element}")
                         embeds.append(genshin_db.parse(talent))
-                    for element in ["Anemo", "Geo", "Electro", "Dendro"]:
-                        constell = self.db.constellations.find(f"Traveler ({element} Element)")
+                    for element in ["Anemo", "Geo", "Electro", "Dendro", "Hydro"]:
+                        constell = self.db.constellations.find(f"Traveler ({element})")
                         titles.append(f"Constellation: {element}")
                         embeds.append(genshin_db.parse(constell))
                 else:
@@ -104,7 +104,7 @@ class Search(commands.Cog, name="search-data"):
     ) -> List[Choice[str]]:
         """Autocomplete for the item_name parameter of the slash_search command"""
 
-        category: StrCategory | None = interaction.namespace.Category
+        category: StrCategory | None = interaction.namespace.category
         if category is None:
             return []
 

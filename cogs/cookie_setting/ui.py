@@ -57,6 +57,15 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         max_length=150,
     )
 
+    ltmid_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
+        label="ltmid_v2",
+        placeholder="Paste the obtained ltmid_v2",
+        style=discord.TextStyle.short,
+        required=False,
+        min_length=5,
+        max_length=20,
+    )
+
     def __init__(self, games: list[genshin.Game]):
         self.games: list[genshin.Game] = games
         super().__init__()
@@ -78,7 +87,9 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
                 cookie += f" ltuid{v2_str}={self.ltuid_v2.value};"
             else:
                 cookie += f" ltmid_v2={self.ltuid_v2.value};"
-
+        if len(self.ltmid_v2.value) > 0:
+            cookie += f" ltmid_v2={self.ltmid_v2.value};"
+            
         LOG.Info(f"Setting up {LOG.User(interaction.user)}'s Cookie: {self.cookie.value}")
         try:
             trimmed_cookie = await self._trim_cookies(cookie)

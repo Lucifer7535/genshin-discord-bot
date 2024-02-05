@@ -49,10 +49,15 @@ class Artifact(GenshinDbBase):
     effect_4pc: Optional[str] = Field(None, alias="effect4Pc")
 
     flower: Optional[PartDetail] = None
+    
     plume: Optional[PartDetail] = None
+
     sands: Optional[PartDetail] = None
+
     goblet: Optional[PartDetail] = None
+
     circlet: PartDetail
+
     images: Images
     version: str
 

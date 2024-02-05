@@ -133,7 +133,7 @@ class EquipmentParser:
         description = (
             f"Base Attack: {weapon.base_atk}\nMain Attribute: {weapon.mainstat}+{weapon.mainvalue}\n"
         )
-        embed = EmbedTemplate.normal(description, title=f"★{weapon.rarity} {weapon.name}")
+        embed = EmbedTemplate.normal(description, title=f"{weapon.rarity}★ {weapon.name}")
         embed.add_field(name=weapon.effect_name, value=weapon.effect_desciption)
         embed.set_thumbnail(
             url=(
@@ -150,9 +150,8 @@ class CharacterParser:
 
     @classmethod
     def parse_character(cls, character: Character) -> discord.Embed:
-
         embed = EmbedTemplate.normal(
-            character.description, title=f"★{character.rarity} {character.name}"
+            character.description, title=f"{character.rarity}★ {character.name}"
         )
         if character.images is not None:
             embed.set_thumbnail(url=character.images.icon_url)
@@ -187,7 +186,6 @@ class CharacterParser:
 
     @classmethod
     def parse_talent(cls, talent: Talent) -> discord.Embed:
-
         embed = EmbedTemplate.normal("", title=talent.name)
         embed.add_field(name=talent.combat1.name, value=talent.combat1.description)
         embed.add_field(name="E: " + talent.combat2.name, value=talent.combat2.description)
@@ -207,7 +205,7 @@ class CharacterParser:
         embed = EmbedTemplate.normal("", title=cst.name)
         csts = [cst.c1, cst.c2, cst.c3, cst.c4, cst.c5, cst.c6]
         for i, _cst in enumerate(csts):
-            embed.add_field(name=f"{i+1} Constellation: {_cst.name}", value=_cst.description)
+            embed.add_field(name=f"Constellation{i+1}: {_cst.name}", value=_cst.description)
         return embed
 
 

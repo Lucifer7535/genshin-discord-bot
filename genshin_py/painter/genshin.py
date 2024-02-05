@@ -116,23 +116,25 @@ def draw_exploration_card(
     white = (255, 255, 255, 255)
     grey = (230, 230, 230, 255)
 
-    explored_list = [
-        ["Mondstadt", 0],
-        ["Liyue", 0],
-        ["Dragonspine", 0],
-        ["Inazuma", 0],
-        ["Enkanomiya", 0],
-        ["The Chasm", 0],
-        ["          The Chasm:\n   Underground Mines", 0],
-        ["Sumeru", 0],
-        ["Fontaine", 0],
-    ]
+    explored_list = {
+        1: ["Mondstadt", 0],
+        2: ["Liyue", 0],
+        3: ["Dragonspine", 0],
+        4: ["Inazuma", 0],
+        5: ["Enkanomiya", 0],
+        6: ["The Chasm", 0],
+        7: ["          The Chasm:\n   Underground Mines", 0],
+        8: ["Sumeru", 0],
+        9: ["Fontaine", 0],
+        10: ["     Chenyu Vale:\n       Upper Vale", 0],
+        11: ["         Chenyu Vale:\n    Southern Mountain", 0]
+    }
     offering_list = [["  Frostbearing\n         Tree", 0], ["  Sacred Sakura's\n           Favor", 0], ["  Lumenstone\n     Adjuvant", 0], ["Tree of Dreams", 0], ["Fountain of Lucine", 0]]
     large_font_size = 35
     for e in user_stats.explorations:
-        if e.id > len(explored_list):
+        if e.id not in explored_list:
             continue
-        explored_list[e.id - 1][1] = e.explored
+        explored_list[e.id][1] = e.explored
 
         if e.id == 3 and len(e.offerings) >= 1:
             offering_list[0][1] = e.offerings[0].level
@@ -146,7 +148,7 @@ def draw_exploration_card(
             offering_list[4][1] = e.offerings[0].level
     
     stat_list: list[tuple[str, float, str]] = []
-    for e in explored_list:
+    for id, e in explored_list.items():
         if len(e[0]) > 12:
             font_size = large_font_size
         else:
@@ -156,7 +158,7 @@ def draw_exploration_card(
         if len(o[0]) > 12:
             font_size = large_font_size
         else:
-            font_size = 41
+            font_size = 37
         stat_list.append(("Level", o[1], o[0], font_size))
 
     for n, stat in enumerate(stat_list):
@@ -164,25 +166,25 @@ def draw_exploration_card(
         row = int(n / 3)
         draw_text(
             img,
-            (245 + column * 295, 590 + row * 250),
+            (245 + column * 295, 590 + row * 205),
             stat[0],
             "SourceHanSansTC-Bold.otf",
-            45,
+            30,
             grey,
             "mm",
         )
         draw_text(
             img,
-            (245 + column * 295, 661 + row * 250),
+            (245 + column * 295, 639 + row * 205),
             f"{stat[1]:g}",
             "SourceHanSansTC-Bold.otf",
-            82,
+            80,
             white,
             "mm",
         )
         draw_text(
             img,
-            (245 + column * 295, 740 + row * 250),
+            (245 + column * 295, 720 + row * 205),
             stat[2],
             "SourceHanSansTC-Regular.otf",
             stat[3],
