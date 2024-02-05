@@ -7,6 +7,7 @@ from discord import app_commands
 from discord.ext import commands
 from genshinpyrail.genshinpyrail import genshin_character_list, honkai_character_list
 from genshinpyrail.src.tools.model import GenshinCharterList, StarRaillCharterList
+from typing import Optional
 
 import genshin_py
 from utility import EmbedTemplate
@@ -36,7 +37,7 @@ class CharactersCog(commands.Cog, name="characters-list"):
         self,
         interaction: discord.Interaction,
         game: genshin.Game,
-        user: discord.User | discord.Member | None = None,
+        user: Optional[discord.User] = None,
     ):
         user = user or interaction.user
         try:
