@@ -25,18 +25,16 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
     async def slash_cookie(self, interaction: discord.Interaction, option: int):
         if option == 0:  # Show instructions on how to get Cookie
             embed = EmbedTemplate.normal(
-                "**1.** Copy the entire code at the bottom of this message\n"
-                "**2.** Open [Hoyolab Official Website](https://www.hoyolab.com) on **Chrome** on PC or mobile, log in, go to Toolbox, and then Records to view your character page\n"
-                "**3.** Paste the code into the address bar after entering `java`, as shown below\n"
-                "**4.** Press Enter, the webpage will display your Cookie, select all and copy\n"
-                f"**5.** Use the command {get_app_command_mention('cookie-login')} here to submit the obtained Cookie\n"
-                "． https://imgur.com/a/C4l67BW\n",
-                title="Genshin Helper | Instructions to Obtain Cookie",
+                "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) in an **incognito window** using your **computer** browser and log in to your account.\n"
+                "**2.** Press **F12** to open the browser developer tools.\n"
+                "**3.** Switch to the **Application** tab (refer to the image below).\n"
+                "**4.** Click on the URL under Cookies on the left, and you will see your Cookie on the right.\n"
+                "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2**, and copy the values of these three fields.\n"
+                f"**6.** Use the command {get_app_command_mention('cookie-login')} here and paste the values into the corresponding fields.\n",
+                title="Genshin Helper Bot | Instructions for Obtaining Cookies",
             )
-            #embed.set_image(url="https://i.imgur.com/OQ8arx0.gif")
-            code_msg = "script: document.write(document.cookie)"
+            embed.set_image(url="https://i.imgur.com/2JVM3ub.png")
             await interaction.response.send_message(embed=embed)
-            await interaction.followup.send(content=code_msg)
 
         elif option == 1:  # Submit obtained Cookie to the bot
             view = GameSelectionView()
@@ -50,7 +48,7 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
             msg = (
                 "· The content of the Cookie includes your personal identification code and does not include your account and password\n"
                 "· Therefore, it cannot be used to log in to the game or change the account password. The content of the Cookie looks like this:\n"
-                "`ltoken=xxxx ltuid=1234 cookie_token=yyyy account_id=1234`\n"
+                "ltoken_v2=xxxx ltuid_v2=1234 ltmid_v2=yyyy"
                 "· The bot saves and uses the Cookie to get your Genshin data on the Hoyolab website and provide services\n"
                 "· The bot stores data in a cloud-hosted environment, only connecting to Discord and Hoyolab servers\n"
                 "· For more detailed information, you can check the [Bahamut Forum Post (in Chinese)](https://forum.gamer.com.tw/Co.php?bsn=36730&sn=162433)."

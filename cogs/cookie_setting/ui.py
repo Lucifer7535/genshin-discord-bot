@@ -30,15 +30,6 @@ class GameSelectionView(discord.ui.View):
 class CookieModal(discord.ui.Modal, title="Submit Cookie"):
     """Form to submit Cookie"""
 
-    cookie: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Cookie",
-        placeholder='Paste the Cookie obtained from the webpage. Use the command "/cookie-login" to see how to obtain it.',
-        style=discord.TextStyle.long,
-        required=False,
-        min_length=50,
-        max_length=2000,
-    )
-
     ltuid_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
         label="ltuid_v2",
         placeholder="Paste the obtained ltuid_v2",
@@ -65,6 +56,16 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         min_length=5,
         max_length=20,
     )
+
+    cookie: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
+        label="Cookie",
+        placeholder="Leave this field blank unless there are specific requirements. Use it to paste the complete cookie string.",
+        style=discord.TextStyle.long,
+        required=False,
+        min_length=50,
+        max_length=2000,
+    )
+
 
     def __init__(self, games: list[genshin.Game]):
         self.games: list[genshin.Game] = games
