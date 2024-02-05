@@ -244,3 +244,9 @@ Tag the bot in a regular channel, for example: @bot_username jsk ping.
 12. scheduled reminders<br>
 ![](https://i.imgur.com/z61kUh1.png)
 </details>
+
+## Acknowledgments
+- Genshin API used from: https://github.com/thesadru/genshin.py
+- Discord API used from: https://github.com/Rapptz/discord.py
+- Enka Network API used from: https://github.com/EnkaNetwork/API-docs
+- Genshin-DB API used from: https://github.com/theBowja/genshin-db
