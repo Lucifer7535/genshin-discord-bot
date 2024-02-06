@@ -141,7 +141,9 @@ You need to obtain the following in this step:
     ```
     pkg install libjpeg-turbo libpng libzmq freetype
     ```
-
+    ```
+    pip install greenlet
+    ```
     3. clone this repository using:
     ```
     git clone https://github.com/Lucifer7535/genshin-discord-bot.git
