@@ -1,6 +1,6 @@
 # GENSHIN HELPER BOT
 
-Credits : https://github.com/KT-Yeh/Genshin-Discord-Bot by @KT-Yeh
+Credits : https://github.com/KT-Yeh/Genshin-Discord-Bot
 
 ## What does this bot do?
 This bot can be used to check various information from Genshin Impact, Honkai Impact 3rd & Honkai Star Rail directly in Discord channels, including:
