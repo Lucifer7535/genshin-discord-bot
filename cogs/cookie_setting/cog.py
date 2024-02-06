@@ -24,17 +24,23 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
     @custom_log.SlashCommandLogger
     async def slash_cookie(self, interaction: discord.Interaction, option: int):
         if option == 0:  # Show instructions on how to get Cookie
-            embed = EmbedTemplate.normal(
+            embed1 = EmbedTemplate.normal(
                 "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) in an **incognito window** using your **computer** browser and log in to your account.\n"
                 "**2.** Press **F12** to open the browser developer tools.\n"
                 "**3.** Switch to the **Application** tab (refer to the image below).\n"
                 "**4.** Click on the URL under Cookies on the left, and you will see your Cookie on the right.\n"
                 "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2**, and copy the values of these three fields.\n"
-                f"**6.** Use the command {get_app_command_mention('cookie-login')} here and paste the values into the corresponding fields.\n",
+                f"**6.** Use the command {get_app_command_mention('cookie-login')} here and paste the values into the corresponding fields.",
                 title="Genshin Helper Bot | Instructions for Obtaining Cookies",
             )
-            embed.set_image(url="https://i.imgur.com/2JVM3ub.png")
-            await interaction.response.send_message(embed=embed)
+            embed1.set_image(url="https://i.imgur.com/2JVM3ub.png")
+            await interaction.response.send_message(embed=embed1)
+            embed2 = EmbedTemplate.normal(
+                "**7.** If you don't have access to a computer/laptop, you can use [Kiwi browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en&gl=US&pli=1) and do the steps as shown below:",
+                title="Genshin Helper Bot | Instructions for Obtaining Cookies (Kiwi Browser)",
+            )
+            embed2.set_image(url="https://i.imgur.com/wceWJvG.png")
+            await interaction.followup.send(embed=embed2)
 
         elif option == 1:  # Submit obtained Cookie to the bot
             view = GameSelectionView()
