@@ -55,7 +55,7 @@ class HallRecordDropdown(discord.ui.Select):
         options = [
             discord.SelectOption(
                 label=f"[{hall.data.begin_time.datetime.strftime('%Y.%m.%d')} ~ "
-                f"{hall.data.end_time.datetime.strftime('%Y.%m.%d')}] ★ {hall.data.total_stars}",
+                f"{hall.data.end_time.datetime.strftime('%Y.%m.%d')}] {hall.data.total_stars}★",
                 value=str(i),
             )
             for i, hall in enumerate(sorted_hall_data_list)
@@ -102,7 +102,7 @@ class HallFloorDropdown(discord.ui.Select):
         ]
         options += [
             discord.SelectOption(
-                label=f"[★{floor.star_num}] {floor.name}",
+                label=f"[{floor.star_num}★] {floor.name}",
                 value=str(i),
             )
             for i, floor in enumerate(hall_data.data.floors)

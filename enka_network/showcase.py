@@ -288,7 +288,7 @@ class Showcase:
         }
         _assets_character = enka_assets.character(character.id)
         embed = discord.Embed(
-            title=f"★{_assets_character.rarity if _assets_character else '?'} {character.name}",
+            title=f"{_assets_character.rarity if _assets_character else '?'}★ {character.name}",
             color=color.get(character.element),
         )
         if character.icon:

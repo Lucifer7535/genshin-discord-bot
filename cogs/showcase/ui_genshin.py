@@ -34,7 +34,7 @@ class ShowcaseCharactersDropdown(discord.ui.Select):
 
             options.append(
                 discord.SelectOption(
-                    label=f"★{_rarity} Lv.{character.level} {character.name}",
+                    label=f"{_rarity}★ Lv.{character.level} {character.name}",
                     value=str(i),
                     emoji=emoji.elements.get(element),
                 )

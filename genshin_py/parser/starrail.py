@@ -87,7 +87,7 @@ def parse_starrail_character(character: genshin.models.StarRailDetailCharacter) 
     embed = discord.Embed(color=color.get(character.element.lower()))
     embed.set_thumbnail(url=character.icon)
     embed.add_field(
-        name=f"★{character.rarity} {character.name}",
+        name=f"{character.rarity}★ {character.name}",
         inline=True,
         value = f"Constellation: {character.rank}\nLevel: Lv. {character.level}"
     )
@@ -108,7 +108,7 @@ def parse_starrail_character(character: genshin.models.StarRailDetailCharacter) 
         pos_name = {1: "Head", 2: "Hands", 3: "Torso", 4: "Legs"}
         msg = "\n".join(
             [
-                f"{pos_name.get(relic.pos)}：★{relic.rarity} {relic.name}"
+                f"{pos_name.get(relic.pos)}：{relic.rarity}★ {relic.name}"
                 for relic in character.relics
             ]
         )
@@ -118,7 +118,7 @@ def parse_starrail_character(character: genshin.models.StarRailDetailCharacter) 
         ornament_positions = {5: "Sub-Space Beacon", 6: "Link Loop"}
         msg = "\n".join(
             [
-                f"{ornament_positions.get(ornament.pos)}: ★{ornament.rarity} {ornament.name}"
+                f"{ornament_positions.get(ornament.pos)}: {ornament.rarity}★ {ornament.name}"
                 for ornament in character.ornaments
             ]
         )

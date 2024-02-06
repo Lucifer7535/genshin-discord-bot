@@ -76,7 +76,7 @@ class Showcase:
         if character.light_cone is not None:
             light_cone = character.light_cone
             embed.add_field(
-                name=f"★{light_cone.rarity} {light_cone.name}",
+                name=f"{light_cone.rarity}★ {light_cone.name}",
                 value=f"Shadowing:{light_cone.superimpose} Floors\nlevel：Lv. {light_cone.level}",
             )
         
@@ -114,7 +114,7 @@ class Showcase:
             name = (
                 relic.main_property.name.removesuffix("Increasing damage").removesuffix("efficiency").removesuffix("addition")
             )
-            value = f"★{relic.rarity}{name}+{relic.main_property.value}\n"
+            value = f"{relic.rarity}★ {name}+{relic.main_property.value}\n"
             for prop in relic.sub_property:
                 value += f"{prop.name}+{prop.value}\n"
 
@@ -224,7 +224,7 @@ class Showcase:
             "Virtual number": 0xF7E54B,
         }
         embed = discord.Embed(
-            title=f"★{character.rarity} {character.name}",
+            title=f"{character.rarity}★ {character.name}",
             color=color.get(character.element),
         )
         embed.set_thumbnail(url=self.client.get_icon_url(character.icon))
