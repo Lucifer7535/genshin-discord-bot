@@ -119,6 +119,29 @@ You need to obtain the following in this step:
     ```
     python main.py
     ```
+    
+</details>
+
+- <details><summary>Using Docker (Windows/Linux): [Recommended]</summary>
+
+    1. Install Docker
+        - For Windows install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+        - For Linux install [Docker](https://docs.docker.com/desktop/install/linux-install/).
+
+    2. Create a new folder where you want to setup the bot. for e.g. create a new folder named ```Genshin-Discord-Bot```.
+
+    3. Download the [docker-compose.yml](https://github.com/Lucifer7535/genshin-discord-bot/blob/a948d1f79e0f9024448c562f4f31ba0d25ca4a04/docker-compose.yml) file and place it in that folder you just created.
+    
+    4. Open the ```docker-compose.yml``` file in a text editor. Fill in the Application ID, Server ID, and Bot Token obtained from the [Web Browser](#web-browser). Save the file. Example:
+        - application_id: int = 1234567
+        - test_server_id: int = 1234567
+        - bot_token: str = "abcd12345"
+
+    5. Open **Command Prompt/Powershell/Terminal** in this folder and enter the following command to run it. Make sure your Docker Desktop is running.
+    ```
+    docker-compose up
+    ```
+    
 </details>
 
 - <details><summary>For Android (termux):</summary>
