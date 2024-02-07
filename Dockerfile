@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=Builder /app .
 COPY --from=Builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 
-CMD [ "bash", "start.sh" ]
+CMD [ "python", "main.py" ]
