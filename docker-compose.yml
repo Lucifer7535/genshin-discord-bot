@@ -2,45 +2,45 @@ version: "3"
 
 services:
   genshin-discord-bot:
-    image: ghcr.io/kt-yeh/genshin-discord-bot:latest
+    image: ghcr.io/lucifer7535/genshin-discord-bot:latest
     container_name: GenshinDiscordBot
     environment:
       - TZ=Asia/Taipei
-      # ↓↓↓↓↓↓↓↓ 必填設定 ↓↓↓↓↓↓↓↓
-      # 機器人 Application ID，從 Discord Developer 網頁上取得
+      # ↓↓↓↓↓↓↓↓ Mandatory Settings ↓↓↓↓↓↓↓↓
+      # Bot Application ID, obtained from Discord Developer webpage
       - APPLICATION_ID=123456789
-      # 測試伺服器 ID，用來測試斜線指令，管理員指令只能在本伺服器使用
+      # Test server ID, used for testing slash commands; admin commands can only be used in this server
       - TEST_SERVER_ID=123456789
-      # 機器人 Token，從 Discord Developer 網頁取得
+      # Bot Token, obtained from Discord Developer webpage
       - BOT_TOKEN=ABCD123456789
       # ==========================
 
-      # ↓↓↓↓↓↓ 參數設定 (可選) ↓↓↓↓↓
-      # Hoyolab 自動簽到的間隔 (單位：分鐘)
+      # ↓↓↓↓↓↓ Optional Settings ↓↓↓↓↓↓
+      # Interval for Hoyolab daily check-in (in minutes)
       - SCHEDULE_DAILY_CHECKIN_INTERVAL=10
-      # 自動檢查即時便箋的間隔 (單位：分鐘)
+      # Interval for checking instant resin (in minutes)
       - SCHEDULE_CHECK_RESIN_INTERVAL=5
-      # 排程執行時每位使用者之間的等待間隔（單位：秒）
+      # Waiting interval between each user during scheduled execution (in seconds)
       - SCHEDULE_LOOP_DELAY=2.0
-      # 過期使用者天數，會刪除超過此天數未使用任何指令的使用者
+      # Number of days until a user expires; users who haven't used any commands for this many days will be deleted
       - EXPIRED_USER_DAYS=180
 
-      # 使用者重複呼叫部分斜線指令的冷卻時間（單位：秒）
+      # Cooldown time for users to call slash commands repeatedly (in seconds)
       - SLASH_CMD_COOLDOWN=5.0
-      # Discord 長時間互動介面（例：下拉選單） 的逾時時間（單位：秒）
+      # Timeout for long interactions in Discord (e.g., dropdown menus) (in seconds)
       - DISCORD_VIEW_LONG_TIMEOUT=1800
-      # Discord 短時間互動介面（例：確認、選擇按鈕）的逾時時間（單位：秒）
+      # Timeout for short interactions in Discord (e.g., confirmation, selection buttons) (in seconds)
       - DISCORD_VIEW_SHORT_TIMEOUT=120
       # ==========================
 
-      # ↓↓↓↓↓↓ 進階設定 (可選) ↓↓↓↓↓↓
-      # 遠端簽到 API URL list
+      # ↓↓↓↓↓↓ Advanced Settings (Optional) ↓↓↓↓↓↓
+      # Remote check-in API URL list
       # - DAILY_REWARD_API_LIST=["https://xxxx.xxx"]
-      # Sentry DSN 位址設定
+      # Sentry DSN address setting
       # - SENTRY_SDK_DSN=https://xxxxx@xxxx.ingest.sentry.io/xxx
-      # Prometheus server 監聽的 Port
+      # Prometheus server listening port
       # - PROMETHEUS_SERVER_PORT=9091
-      # hoyolab-geetest-webserver 網頁服務的位址，若要給別人使用，要改成自己電腦的公開 IP
+      # Address of hoyolab-geetest-webserver webpage service; if you want to share it with others, change it to your computer's public IP
       - GEETEST_SOLVER_URL=http://127.0.0.1:8081
       # ==========================
     volumes:
@@ -48,25 +48,25 @@ services:
       - ./cogs_external:/app/cogs_external
     restart: always
 
-  # 用於設定使用者圖形驗證的網頁服務
+  # Service for configuring user graphical verification
   hoyolab-geetest-webserver:
-    image: ghcr.io/kt-yeh/hoyolab-geetest-webserver:main
+    image: ghcr.io/lucifer7535/hoyolab-geetest-webserver:main
     container_name: HoyolabGeetestWebserver
     environment:
       - TZ=Asia/Taipei
     volumes:
       - ./data/bot/:/app/data/
     ports:
-      # 左邊 8081 要與上面 GEETEST_SOLVER_URL 對應
+      # Left side 8081 should correspond to GEETEST_SOLVER_URL above
       - "8081:8000"
     restart: always
 
-  # 若要使用 Prometheus 監控
-  # 1. 上面進階設定，取消註解 PROMETHEUS_SERVER_PORT=9091
-  # 2. 修改 data/prometheus.yml 檔案內容
-  #   - 設定 targets: ['genshin-discord-bot:9091']
-  #   - 設定 remote_write
-  # 3. 取消下方整段註解
+  # If you want to use Prometheus monitoring
+  # 1. Uncomment PROMETHEUS_SERVER_PORT=9091 in the advanced settings above
+  # 2. Modify the contents of data/prometheus.yml file
+  #    - Set targets: ['genshin-discord-bot:9091']
+  #    - Set remote_write
+  # 3. Uncomment the entire section below
   # prometheus:
   #   image: prom/prometheus:v2.37.6
   #   container_name: Prometheus
