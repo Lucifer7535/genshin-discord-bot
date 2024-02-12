@@ -27,14 +27,14 @@ class RealtimeNotes:
                     defer, notes = await asyncio.gather(
                         interaction.response.defer(), genshin_py.get_genshin_notes(user.id)
                     )
-                    embed = await genshin_py.parse_genshin_notes(
+                    main_embed, expedition_embeds = await genshin_py.parse_genshin_notes(
                         notes, user=user, short_form=short_form
                     )
                 case genshin.Game.STARRAIL:
                     defer, notes = await asyncio.gather(
                         interaction.response.defer(), genshin_py.get_starrail_notes(user.id)
                     )
-                    embed = await genshin_py.parse_starrail_notes(
+                    main_embed = await genshin_py.parse_starrail_notes(
                         notes, user, short_form=short_form
                     )
                 case _:
@@ -42,7 +42,8 @@ class RealtimeNotes:
         except Exception as e:
             await interaction.edit_original_response(embed=EmbedTemplate.error(e))
         else:
-            await interaction.edit_original_response(embed=embed)
+            embeds = [main_embed] + expedition_embeds
+            await interaction.edit_original_response(embeds=embeds)
 
 
 class RealtimeNotesCog(commands.Cog, name="instant-notes"):
