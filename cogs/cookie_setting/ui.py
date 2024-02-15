@@ -66,7 +66,6 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         max_length=2000,
     )
 
-
     def __init__(self, games: list[genshin.Game]):
         self.games: list[genshin.Game] = games
         super().__init__()
@@ -90,13 +89,13 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
                 cookie += f" ltmid_v2={self.ltuid_v2.value};"
         if len(self.ltmid_v2.value) > 0:
             cookie += f" ltmid_v2={self.ltmid_v2.value};"
-            
+
         LOG.Info(f"Setting up {LOG.User(interaction.user)}'s Cookie: {self.cookie.value}")
         try:
             trimmed_cookie = await self._trim_cookies(cookie)
             if trimmed_cookie is None:
                 raise Exception(
-                    f"Invalid or incorrect Cookie. Please re-enter using {get_app_command_mention('cookie-login')} for instructions."
+                    f"Invalid or incorrect Cookie. Please re-enter using {get_app_command_mention('cookie-login')} for instructions." # noqa
                 )
             msg = await genshin_py.set_cookie(interaction.user.id, trimmed_cookie, self.games)
         except Exception as e:

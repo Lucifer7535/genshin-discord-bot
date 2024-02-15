@@ -32,6 +32,7 @@ class TravelerDiary:
 class DiaryCog(commands.Cog, name="Traveler's Diary/Exploration Calendar"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+
     @app_commands.command(name="diary_notes", description="Query Traveler's Diary (Primogems, Mora income)")
     @app_commands.rename(month="month")
     @app_commands.describe(month="Select the month to query")
@@ -43,7 +44,7 @@ class DiaryCog(commands.Cog, name="Traveler's Diary/Exploration Calendar"):
         ]
     )
 
-    @SlashCommandLogger
+    @SlashCommandLogger # noqa
     async def slash_diary(self, interaction: discord.Interaction, month: int):
         month = datetime.datetime.now().month + month
         month = month + 12 if month < 1 else month

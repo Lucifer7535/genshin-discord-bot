@@ -14,6 +14,7 @@ from .ui import SearchResultsDropdown
 
 StrCategory = Literal["Character", "Weapon", "Artifact", "Item/Food", "Achievements", "TCG-cards"]
 
+
 class Search(commands.Cog, name="search-data"):
     def __init__(self, bot: commands.Bot, genshin_db_data: genshin_db.GenshinDbAllData):
         self.bot = bot
@@ -128,6 +129,7 @@ class Search(commands.Cog, name="search-data"):
         choices = choices[:25]
         choices.sort(key=lambda choice: choice.name)
         return choices
+
 
 async def setup(client: commands.Bot):
     try:

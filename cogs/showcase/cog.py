@@ -17,7 +17,7 @@ class ShowcaseCog(commands.Cog, name="showcase-characters"):
 
     @app_commands.command(name="showcase-characters", description="Display the character's showcase of a specified UID player")
     @app_commands.rename(game="game", user="user")
-    @app_commands.describe(uid="UID of the player to be queried. If the bot has saved data, you don't need to fill in this field", user="Display members characters showcase. If empty, show own characters.")
+    @app_commands.describe(uid="UID of the player to be queried. If the bot has saved data, you don't need to fill in this field", user="Display members characters showcase. If empty, show own characters.") # noqa
     @app_commands.choices(
         game=[
             app_commands.Choice(name="Genshin Impact", value="Genshin Impact"),

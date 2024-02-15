@@ -92,7 +92,7 @@ class HallFloorDropdown(discord.ui.Select):
         save_or_remove: typing.Literal["SAVE", "REMOVE"],
     ):
         # The first option shows either Save or Remove based on the parameter
-        _descr = "Save this record to the database for future reference" if save_or_remove == "SAVE" else "Remove this Forgotten Hall record from the database"
+        _descr = "Save this record to database, can be viewed later" if save_or_remove == "SAVE" else "Delete from database"
         options = [
             discord.SelectOption(
                 label=f"{'📁 Save Record' if save_or_remove == 'SAVE' else '❌ Remove Record'}",

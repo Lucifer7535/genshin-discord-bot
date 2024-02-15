@@ -40,7 +40,7 @@ def generalErrorHandler(func: Callable):
                         continue
         except genshin.errors.DataNotPublic as e:
             LOG.FuncExceptionLog(user_id, func.__name__, e)
-            raise GenshinAPIException(e, "This feature is not enabled. Please enable it from the 'Settings' in the 'Personal Record' on the Hoyolab website or app.")
+            raise GenshinAPIException(e, "This feature is not enabled. Please enable it from the 'Settings' in the 'Personal Record' on the Hoyolab website or app.")  # noqa
         except genshin.errors.InvalidCookies as e:
             LOG.FuncExceptionLog(user_id, func.__name__, e)
             raise GenshinAPIException(e, "Cookie has expired. Please obtain a new Cookie from Hoyolab.")

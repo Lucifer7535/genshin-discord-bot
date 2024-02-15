@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Weapon(BaseModel):
     """Weapon Data
 

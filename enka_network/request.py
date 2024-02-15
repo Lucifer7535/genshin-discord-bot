@@ -44,7 +44,7 @@ async def fetch_enka_data(
 
 
 def _combine_cache_data(new_data: Dict[str, Any], cache_data: Dict[str, Any]) -> Dict[str, Any]:
-    
+
     len_new_showAvatar = len(new_data["playerInfo"].get("showAvatarInfoList", []))
     len_cache_showAvatar = len(cache_data["playerInfo"].get("showAvatarInfoList", []))
     len_new_avatarInfo = len(new_data.get("avatarInfoList", []))
@@ -56,7 +56,7 @@ def _combine_cache_data(new_data: Dict[str, Any], cache_data: Dict[str, Any]) ->
         for cache_avatarInfo in cache_list:
             if len(new_list) >= 23:
                 break
-            
+
             for new_avatarInfo in new_list:
                 if new_avatarInfo["avatarId"] == cache_avatarInfo["avatarId"]:
                     break

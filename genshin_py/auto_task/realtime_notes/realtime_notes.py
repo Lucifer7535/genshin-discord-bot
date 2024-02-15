@@ -59,7 +59,7 @@ class RealtimeNotes:
             if r and len(r.message) > 0:
                 await cls._send_message(user, r.message, r.embed)
             await asyncio.sleep(config.schedule_loop_delay)
-        LOG.System(f"Automatic check for real-time notes in {game_name} completed. {count}/{len(user_ids)} users have been checked.")
+        LOG.System(f"Automatic check for real-time notes in {game_name} completed. {count}/{len(user_ids)} users have been checked.") # noqa
 
     @classmethod
     async def _send_message(cls, user: T_User, message: str, embed: discord.Embed) -> None:
@@ -73,12 +73,12 @@ class RealtimeNotes:
             discord.Forbidden,
             discord.NotFound,
             discord.InvalidData,
-        ) as e:  
-            LOG.Except(f"Failed to send message during automatic check for real-time notes. Remove this user {LOG.User(user.discord_id)}: {e}")
+        ) as e:
+            LOG.Except(f"Failed to send message during automatic check for real-time notes. Remove this user {LOG.User(user.discord_id)}: {e}") # noqa
             await Database.delete_instance(user)
         except Exception as e:
             sentry_sdk.capture_exception(e)
-        else:  
+        else:
             if discord_user.mentioned_in(msg_sent) is False:
-                LOG.Except(f"The user is not in the channel during the automatic check for real-time notes. Remove this user {LOG.User(discord_user)}")
+                LOG.Except(f"The user is not in the channel during the automatic check for real-time notes. Remove this user {LOG.User(discord_user)}") # noqa
                 await Database.delete_instance(user)

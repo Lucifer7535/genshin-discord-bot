@@ -35,14 +35,14 @@ class Tool:
         Returns
         ------
         (`bool`, `str`):
-            - `True` if the check is successful, data exists in the database; `False` if the check fails, data does not exist in the database
+            - `True` if the check is successful, data exists in the database; `False` if the check fails, data does not exist in the database # noqa
             - Error message when the check fails
         """
         if user is None:
-            return False, f"User not found, please set the cookie first (use {get_app_command_mention('cookie-login')} for instructions)"
+            return False, f"User not found, please set the cookie first (use {get_app_command_mention('cookie-login')} for instructions)" # noqa
 
         if check_cookie is True and user.cookie_default is None:
-            return False, f"Cookie not found, please set the cookie first (use {get_app_command_mention('cookie-login')} for instructions)"
+            return False, f"Cookie not found, please set the cookie first (use {get_app_command_mention('cookie-login')} for instructions)" # noqa
 
         if check_uid is True and game is not None:
             if (

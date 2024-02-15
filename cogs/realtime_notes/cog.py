@@ -50,9 +50,9 @@ class RealtimeNotesCog(commands.Cog, name="instant-notes"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @app_commands.command(name="instant-notes", description="Query instant notes, including resin, realm currency, expedition... etc.")
+    @app_commands.command(name="instant-notes", description="Query instant notes, including resin, realm currency, expedition... etc.") # noqa
     @app_commands.rename(game="game", short_form="display_format", user="user")
-    @app_commands.describe(short_form="Choose between displaying in complete or simplified format (omitting daily, weekly, exploration dispatch)", user="View data for other members; leave blank to view your own data")
+    @app_commands.describe(short_form="Choose between displaying in complete or simplified format (omitting daily, weekly, exploration dispatch)", user="View data for other members; leave blank to view your own data") # noqa
     @app_commands.choices(
         game=[
             Choice(name="Genshin Impact", value="genshin"),
@@ -61,7 +61,7 @@ class RealtimeNotesCog(commands.Cog, name="instant-notes"):
         short_form=[Choice(name="Complete", value="complete"), Choice(name="Simplified", value="simplified")],
     )
 
-    @SlashCommandLogger
+    @SlashCommandLogger # noqa
     async def slash_notes(
         self,
         interaction: discord.Interaction,

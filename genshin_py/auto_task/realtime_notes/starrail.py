@@ -13,7 +13,7 @@ async def check_starrail_notes(user: StarrailScheduleNotes) -> CheckResult | Non
     try:
         notes = await get_realtime_notes(user)
     except Exception as e:
-        return CheckResult("An error occurred during the automatic check for real-time notes on Star Rail. Expected to check again in 5 hours.", EmbedTemplate.error(e))
+        return CheckResult("An error occurred during the automatic check for real-time notes on Star Rail. Expected to check again in 5 hours.", EmbedTemplate.error(e)) # noqa
 
     if not isinstance(notes, genshin.models.StarRailNote):
         return None
@@ -29,7 +29,7 @@ async def check_threshold(user: StarrailScheduleNotes, notes: genshin.models.Sta
 
     if isinstance(user.threshold_power, int):
         if notes.stamina_recover_time <= timedelta(hours=user.threshold_power):
-            msg += "Exploration power is full!" if notes.stamina_recover_time <= timedelta(0) else "Exploration power is about to be full!"
+            msg += "Exploration power is full!" if notes.stamina_recover_time <= timedelta(0) else "Exploration power is about to be full!" # noqa
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
             if notes.current_stamina >= notes.max_stamina
@@ -38,7 +38,7 @@ async def check_threshold(user: StarrailScheduleNotes, notes: genshin.models.Sta
     if isinstance(user.threshold_expedition, int) and len(notes.expeditions) > 0:
         longest_expedition = max(notes.expeditions, key=lambda epd: epd.remaining_time)
         if longest_expedition.remaining_time <= timedelta(hours=user.threshold_expedition):
-            msg += "The commission is already completed!" if longest_expedition.remaining_time <= timedelta(0) else "The commission is about to be completed!"
+            msg += "The commission is already completed!" if longest_expedition.remaining_time <= timedelta(0) else "The commission is about to be completed!" # noqa
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
             if longest_expedition.finished is True

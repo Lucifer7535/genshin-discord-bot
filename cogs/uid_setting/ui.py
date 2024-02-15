@@ -72,5 +72,5 @@ class UidDropdown(discord.ui.Select):
                 user.uid_starrail = uid
         await Database.insert_or_replace(user)
         await interaction.response.edit_message(
-            embed = EmbedTemplate.normal(f"Character UID: {uid} has been successfully set"), view=None
+            embed=EmbedTemplate.normal(f"Character UID: {uid} has been successfully set"), view=None
         )

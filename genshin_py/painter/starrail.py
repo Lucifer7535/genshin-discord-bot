@@ -63,7 +63,7 @@ async def draw_floor(
             (200, 200, 200),
             "lt",
         )
-    
+
     character_width = 156
     pad = 15
     character_num = len(floor.node_1.avatars)

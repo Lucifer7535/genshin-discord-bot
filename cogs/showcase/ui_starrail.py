@@ -102,7 +102,7 @@ async def showcase(
     if uid is None:
         await interaction.edit_original_response(
             embed=EmbedTemplate.error(
-                f"Please use {get_app_command_mention('uid-settings')} first, or directly input the UID to be queried in the uid parameter of the command",
+                f"Please use {get_app_command_mention('uid-settings')} first, or directly input the UID to be queried in the uid parameter of the command", # noqa
                 title="UID not found",
             )
         )

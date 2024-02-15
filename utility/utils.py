@@ -31,7 +31,7 @@ def get_day_of_week(time: datetime) -> str:
         return "today"
     elif delta.days == 1:
         return "tomorrow"
-    return {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}.get(time.weekday(), "")
+    return {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}.get(time.weekday(), "") # noqa
 
 
 def get_app_command_mention(name: str) -> str:

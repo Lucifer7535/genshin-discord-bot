@@ -1,0 +1,33 @@
+name: DockerBuild
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "cogs/**"
+      - "data/**"
+      - "enka_network/**"
+      - "genshin_db/**"
+      - "genshin_py/**"
+      - "star_rail/**"
+      - "utility/**"
+      - ".dockerignore"
+      - "Dockerfile"
+      - "main.py"
+      - "Pipfile.lock"
+      - "start.sh"
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  DockerBuild:
+    if: github.repository == 'Lucifer7535/Genshin-Discord-Bot'
+    uses: ./.github/workflows/reusable_docker.yml

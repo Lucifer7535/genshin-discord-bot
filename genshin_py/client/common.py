@@ -77,7 +77,7 @@ async def set_cookie(user_id: int, cookie: str, games: Sequence[genshin.Game]) -
     if user is None:
         user = User(user_id)
 
-    character_list: list[str] = []  
+    character_list: list[str] = []
     user.cookie_default = cookie
     if genshin.Game.GENSHIN in games:
         user.cookie_genshin = cookie
@@ -120,7 +120,7 @@ async def claim_daily_reward(
     has_starrail: bool = False,
     is_geetest: bool = False,
 ) -> str:
-    
+
     try:
         client = await get_client(user_id, check_uid=False)
     except Exception as e:
@@ -186,11 +186,11 @@ async def _claim_reward(
         if is_geetest is True and config.geetest_solver_url is not None:
             url = config.geetest_solver_url
             url += f"/geetest/{game}/{user_id}/{exception.gt}/{exception.challenge}"
-            return f"Please unlock the captcha on the website: [Click here to open the link]({url})\nIf an error occurs, please use this command again to regenerate the link."
-        
+            return f"Please unlock the captcha on the website: [Click here to open the link]({url})\nIf an error occurs, please use this command again to regenerate the link." # noqa
+
         if config.geetest_solver_url is not None:
             command_str = get_app_command_mention("daily-checkin")
-            return f"{game_name[game]} sign-in failed: Blocked by captcha. Please use the {command_str} command to choose 'Set Captcha'."
+            return f"{game_name[game]} sign-in failed: Blocked by captcha. Please use the {command_str} command to choose 'Set Captcha'." # noqa
         link: str = {
             genshin.Game.GENSHIN: "https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481",
             genshin.Game.HONKAI: "https://act.hoyolab.com/bbs/event/signin-bh3/index.html?act_id=e202110291205111",

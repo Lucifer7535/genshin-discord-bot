@@ -51,7 +51,7 @@ class RecordCardCog(commands.Cog, name="record-card"):
 
     @app_commands.command(name="record-card", description="Generate Genshin Impact personal game record card")
     @app_commands.rename(option="option", user="user")
-    @app_commands.describe(option="Select whether to view data overview or world exploration", user="View data for other members; leave blank to view your own data")
+    @app_commands.describe(option="Select whether to view data overview or world exploration", user="View data for other members; leave blank to view your own data") # noqa
     @app_commands.choices(
         option=[
             Choice(name="Data Overview", value="RECORD"),
@@ -59,7 +59,7 @@ class RecordCardCog(commands.Cog, name="record-card"):
         ]
     )
 
-    @app_commands.checks.cooldown(1, config.slash_cmd_cooldown)
+    @app_commands.checks.cooldown(1, config.slash_cmd_cooldown) # noqa
     @SlashCommandLogger
     async def slash_card(
         self,
@@ -75,7 +75,7 @@ class RecordCardCog(commands.Cog, name="record-card"):
     ):
         if isinstance(error, app_commands.CommandOnCooldown):
             await interaction.response.send_message(
-                embed = EmbedTemplate.error(f"Card generation cooldown is {config.slash_cmd_cooldown} seconds. Please wait before using it again."),
+                embed=EmbedTemplate.error(f"Card generation cooldown is {config.slash_cmd_cooldown} seconds. Please wait before using it again."), # noqa
                 ephemeral=True,
             )
 

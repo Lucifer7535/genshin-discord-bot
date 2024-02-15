@@ -6,7 +6,6 @@ from database import Database, StarrailShowcase
 
 
 class Showcase:
-    
     def __init__(self, uid: int) -> None:
         self.uid = uid
         self.client = MihomoAPI()
@@ -35,7 +34,6 @@ class Showcase:
             await Database.insert_or_replace(StarrailShowcase(self.uid, self.data))
 
     def get_player_overview_embed(self) -> discord.Embed:
-        
         player = self.data.player
         player_details = self.data.player_details
 
@@ -62,7 +60,6 @@ class Showcase:
         return embed
 
     def get_character_stat_embed(self, index: int) -> discord.Embed:
-        
         embed = self.get_default_embed(index)
         embed.title = (embed.title + " Character panel") if embed.title is not None else "Character panel"
 
@@ -72,14 +69,14 @@ class Showcase:
             name="Role information",
             value=f"Star Soul:{character.eidolon}\n" + f"Level: LV. {character.level}\n",
         )
-        
+
         if character.light_cone is not None:
             light_cone = character.light_cone
             embed.add_field(
                 name=f"{light_cone.rarity}★ {light_cone.name}",
                 value=f"Shadowing:{light_cone.superimpose} Floors\nlevel：Lv. {light_cone.level}",
             )
-        
+
         embed.add_field(
             name="Skill",
             value="\n".join(
@@ -89,7 +86,7 @@ class Showcase:
             ),
             inline=False,
         )
-        
+
         value = ""
         for stat in character.stats:
             if stat.addition is not None:
@@ -123,7 +120,6 @@ class Showcase:
         return embed
 
     def get_relic_score_embed(self, index: int) -> discord.Embed:
-
         embed = self.get_default_embed(index)
         embed.title = (embed.title + "Number of entry") if embed.title is not None else "Number of entry"
 
@@ -132,7 +128,7 @@ class Showcase:
         if relics is None:
             return embed
 
-        substat_sum: dict[str, float] = {  
+        substat_sum: dict[str, float] = {
             "Attack power": 0.0,
             "life value": 0.0,
             "Defense": 0.0,
@@ -143,11 +139,11 @@ class Showcase:
             "Effect": 0.0,
             "Broken special attack": 0.0,
         }
-        crit_value: float = 0.0  # 雙爆分
+        crit_value: float = 0.0
 
-        base_hp = float(next(s for s in character.stats if s.name == "life value").base)  # 生命白值
-        base_atk = float(next(s for s in character.stats if s.name == "Attack power").base)  # 攻擊白值
-        base_def = float(next(s for s in character.stats if s.name == "Defense").base)  # 防禦白值
+        base_hp = float(next(s for s in character.stats if s.name == "life value").base)
+        base_atk = float(next(s for s in character.stats if s.name == "Attack power").base)
+        base_def = float(next(s for s in character.stats if s.name == "Defense").base)
 
         for relic in relics:
             main = relic.main_property

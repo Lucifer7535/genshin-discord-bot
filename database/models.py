@@ -273,6 +273,7 @@ class StarrailForgottenHall(Base):
         data = zlib.decompress(self._raw_data).decode("utf-8")
         return genshin.models.StarRailChallenge.parse_raw(data)
 
+
 class StarrailPureFiction(Base):
     """Star Rail Pure Fiction Database Table"""
 

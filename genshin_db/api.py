@@ -11,13 +11,13 @@ class API:
     )
 
     class GenshinDBLang(enum.Enum):
-        
+
         CHT = "ChineseTraditional"
         CHS = "ChineseSimplified"
         ENG = "English"
 
     class GenshinDBFolder(enum.Enum):
-        
+
         TCG_ACTION_CARDS = "tcgactioncards"
         TCG_CHARACTER_CARDS = "tcgcharactercards"
         TCG_SUMMONS = "tcgsummons"

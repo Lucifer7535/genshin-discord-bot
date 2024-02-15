@@ -10,7 +10,7 @@ from discord.app_commands import Choice
 from discord.ext import commands, tasks
 
 from genshin_py import auto_task
-from utility import SlashCommandLogger, config
+from utility import SlashCommandLogger, config, get_app_command_mention
 
 
 class Admin(commands.Cog):
@@ -128,7 +128,7 @@ class Admin(commands.Cog):
             config.game_maintenance_time = (start_time, end_time)
             await interaction.response.send_message(
                 f"Game maintenance time has been set to: {start_time} ~ {end_time}\n"
-                + "If the daily auto check-in time is within this range, please use the /config command to change the daily auto check-in time."
+                + f"If the daily check-in time is within this range, please use the {get_app_command_mention('config')} command to change daily check-in time." # noqa
             )
 
     # ======== Loop Task ========

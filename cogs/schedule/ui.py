@@ -134,7 +134,7 @@ class GenshinNotesThresholdModal(BaseNotesThresholdModal, title="Set Genshin Imp
         label="Parametric Transformer",
         placeholder="Please enter an integer between 0 and 5",
         required=False,
-        max_length=1,   
+        max_length=1,
     )
 
     expedition: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
@@ -203,7 +203,7 @@ class GenshinNotesThresholdModal(BaseNotesThresholdModal, title="Set Genshin Imp
                     commission_time += timedelta(days=1)
         except Exception:
             await interaction.response.send_message(
-                embed = EmbedTemplate.error("Input value is incorrect. Please make sure the input is an integer within the specified range."),
+                embed=EmbedTemplate.error("Input value is incorrect. Please make sure the input is an integer within the specified range."), # noqa
                 ephemeral=True,
             )
         else:
@@ -219,14 +219,14 @@ class GenshinNotesThresholdModal(BaseNotesThresholdModal, title="Set Genshin Imp
                 )
             )
             await interaction.response.send_message(
-                embed = EmbedTemplate.normal(
-                f"Genshin settings are configured. You will receive reminder messages when the following thresholds are reached:\n"
-                f"{self._to_msg('Original Resin', resin)}"
-                f"{self._to_msg('Realm Currency', realm_currency)}"
-                f"{self._to_msg('Transformer', transformer)}"
-                f"{self._to_msg('Expedition', expedition)}"
-                f"{self._to_msg('Daily Commission', commission_time)}"
-            )
+                embed=EmbedTemplate.normal(
+                f"Genshin settings are configured. You will receive reminder messages when the following thresholds are reached:\n" # noqa
+                f"{self._to_msg('Original Resin', resin)}" # noqa
+                f"{self._to_msg('Realm Currency', realm_currency)}" # noqa
+                f"{self._to_msg('Transformer', transformer)}" # noqa
+                f"{self._to_msg('Expedition', expedition)}" # noqa
+                f"{self._to_msg('Daily Commission', commission_time)}" # noqa
+            ) # noqa
 
             )
 
@@ -256,7 +256,7 @@ class StarrailCheckNotesThresholdModal(BaseNotesThresholdModal, title="Set Starr
     )
 
     universe: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Simulated Universe: Set the time on Sundays to remind about incomplete weekly simulated universe (Leave blank for no reminder)",
+        label="Simulated Universe: Set the time on Sundays to remind about incomplete weekly simulated universe (Leave blank for no reminder)", # noqa
         placeholder="Please enter a time between 0000 and 2359, for example, 0200, 2135",
         required=False,
         max_length=4,
@@ -342,7 +342,7 @@ class StarrailCheckNotesThresholdModal(BaseNotesThresholdModal, title="Set Starr
 
         except Exception:
             await interaction.response.send_message(
-                embed = EmbedTemplate.error("Input value is incorrect. Please make sure the input is an integer within the specified range."),
+                embed = EmbedTemplate.error("Input value is incorrect. Please make sure the input is an integer within the specified range."), # noqa
                 ephemeral=True,
             )
         else:
@@ -358,13 +358,12 @@ class StarrailCheckNotesThresholdModal(BaseNotesThresholdModal, title="Set Starr
                 )
             )
             await interaction.response.send_message(
-                embed = EmbedTemplate.normal(
-                f"Starrail Check settings are configured. You will receive reminder messages when the following thresholds are reached:\n"
-                f"{self._to_msg('Development Power', power)}"
-                f"{self._to_msg('Mission Execution', expedition)}"
-                f"{self._to_msg('Daily Training', dailytraining_time)}"
-                f"{self._to_msg('Simulated Universe', universe_time, 'Sunday')}"
-                f"{self._to_msg('Echo of War', echoofwar_time, 'Sunday')}"
-            )
-
+                embed=EmbedTemplate.normal(
+                f"Starrail Check settings are configured. You will receive reminder messages when the following thresholds are reached:\n" # noqa
+                f"{self._to_msg('Development Power', power)}" # noqa
+                f"{self._to_msg('Mission Execution', expedition)}" # noqa
+                f"{self._to_msg('Daily Training', dailytraining_time)}" # noqa
+                f"{self._to_msg('Simulated Universe', universe_time, 'Sunday')}" # noqa
+                f"{self._to_msg('Echo of War', echoofwar_time, 'Sunday')}" # noqa
+            ) # noqa
             )

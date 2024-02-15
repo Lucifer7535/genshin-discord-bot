@@ -9,6 +9,7 @@ from discord.app_commands import Choice
 from utility import EmbedTemplate, custom_log
 from typing import Literal, Optional
 
+
 class RedeemCode:
     @staticmethod
     async def redeem(
@@ -23,7 +24,7 @@ class RedeemCode:
         if len(codes) == 0:
             await interaction.response.send_message(embed=EmbedTemplate.error("No redemption code detected. Please re-enter."))
             return
-    
+
         codes = codes[:5] if len(codes) > 5 else codes
         msg = "Please click the following link to redeem code:\n> "
         for i, code in enumerate(codes):
@@ -40,7 +41,7 @@ class RedemptionCodeCog(commands.Cog, name="redeem-code"):
 
     @app_commands.command(name="redeem-code", description="Redeem Code from Hoyolab")
     @app_commands.rename(code="code", game="game", user="user")
-    @app_commands.describe(code="Please enter the redemption code to be used, support multiple sets of redemption codes at the same time input")
+    @app_commands.describe(code="Please enter the redemption code to be used, support multiple sets of redemption codes at the same time input") # noqa
     @app_commands.choices(
         game=[
             Choice(name="Genshin Impact", value="GENSHIN"),

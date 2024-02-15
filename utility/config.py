@@ -10,7 +10,7 @@ class Config(BaseSettings):
     """ Bot Application ID"""
     test_server_id: int = 123
     """ID of Test Server to test the commands. The administrator commands can only be used in this server"""
-    bot_token: str ="abc"
+    bot_token: str = "abc"
     """Bot token, obtained from Discord Developer webpage"""
     enka_api_key: str | None = None
     """Send the key to the enka network API"""

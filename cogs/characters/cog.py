@@ -32,7 +32,7 @@ class CharactersCog(commands.Cog, name="characters-list"):
         ],
     )
 
-    @SlashCommandLogger
+    @SlashCommandLogger # noqa
     async def slash_characters(
         self,
         interaction: discord.Interaction,
@@ -57,7 +57,7 @@ class CharactersCog(commands.Cog, name="characters-list"):
         except Exception as e:
             await interaction.edit_original_response(embed=EmbedTemplate.error(e))
             return
-            
+
         try:
             match game:
                 case genshin.Game.GENSHIN:
@@ -82,6 +82,7 @@ class CharactersCog(commands.Cog, name="characters-list"):
             await interaction.edit_original_response(
                 embed=embed, attachments=[discord.File(fp, "image.jpeg")]
             )
+
 
 async def setup(client: commands.Bot):
     await client.add_cog(CharactersCog(client))

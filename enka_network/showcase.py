@@ -254,8 +254,6 @@ class Showcase:
                 name="Number of Affixes" + (f" (Double Crit {round(crit_value)})" if crit_value > 100 else ""),
                 value=embed_value,
             )
-
-
         return embed
 
     async def get_image(self, index: int) -> io.BytesIO | None:
@@ -296,7 +294,7 @@ class Showcase:
 
         if (player := self.data.player) is not None:
             embed.set_author(
-                name = f"{player.nickname}'s Characters Showcase",
+                name=f"{player.nickname}'s Characters Showcase",
                 url=self.url,
                 icon_url=player.avatar.icon.url if player.avatar and player.avatar.icon else None
             )

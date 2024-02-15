@@ -121,7 +121,7 @@ class Database:
 
     @classmethod
     async def delete_instance(cls, instance: DatabaseModel) -> None:
-        """Delete the object from the database. To use, first use the `select_one` or `select_all` methods to get the object instance, then pass it to this method for deletion.
+        """Delete the object from the database. To use, first use the `select_one` or `select_all` methods to get the object instance, then pass it to this method for deletion.  # noqa
 
         Parameters:
         ------

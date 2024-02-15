@@ -60,14 +60,14 @@ def parse_genshin_character(character: genshin.models.Character) -> discord.Embe
     embed.add_field(
         name=f"{character.rarity}★ {character.name}",
         inline=True,
-        value = f"Constellation: {character.constellation}\nLevel: Lv.{character.level}\nFriendship: Lv.{character.friendship}"
+        value=f"Constellation: {character.constellation}\nLevel: Lv.{character.level}\nFriendship: Lv.{character.friendship}"
     )
 
     weapon = character.weapon
     embed.add_field(
         name=f"{weapon.rarity}★ {weapon.name}",
         inline=True,
-        value = f"Refinement: R{weapon.refinement}   Level: Lv.{weapon.level}"
+        value=f"Refinement: R{weapon.refinement}   Level: Lv.{weapon.level}"
     )
 
     if character.constellation > 0:
@@ -96,20 +96,20 @@ def parse_genshin_character(character: genshin.models.Character) -> discord.Embe
 def parse_genshin_diary(diary: genshin.models.Diary, month: int) -> discord.Embed:
     d = diary.data
     embed = discord.Embed(
-        title = f"{diary.nickname}'s Traveler Diary: {month}th month",
-        description = f'Primogems income is {"increased" if d.current_primogems >= d.last_primogems else "decreased"} by {abs(d.primogems_rate)}%, '
+        title=f"{diary.nickname}'s Traveler Diary: {month}th month",
+        description=f'Primogems income is {"increased" if d.current_primogems >= d.last_primogems else "decreased"} by {abs(d.primogems_rate)}%,' # noqa
               f'Mora income is {"increased" if d.current_mora >= d.last_mora else "decreased"} by {abs(d.mora_rate)}%',
-        color = 0xFD96F4,
+        color=0xFD96F4,
 
     )
     embed.add_field(
         name="Obtained this month",
-        value=f"{emoji.items.primogem} Primogems: {d.current_primogems} ({round(d.current_primogems/160)} {emoji.items.intertwined_fate})\n"
+        value=f"{emoji.items.primogem} Primogems: {d.current_primogems} ({round(d.current_primogems/160)} {emoji.items.intertwined_fate})\n" # noqa
         f'{emoji.items.mora} Mora: {format(d.current_mora, ",")}',
     )
     embed.add_field(
         name="Obtained Last month",
-        value=f"{emoji.items.primogem}Primogems: {d.last_primogems} ({round(d.last_primogems/160)}{emoji.items.intertwined_fate})\n"
+        value=f"{emoji.items.primogem}Primogems: {d.last_primogems} ({round(d.last_primogems/160)}{emoji.items.intertwined_fate})\n" # noqa
         f'{emoji.items.mora}Mora：{format(d.last_mora, ",")}',
     )
     embed.add_field(name="\u200b", value="\u200b")
@@ -120,8 +120,6 @@ def parse_genshin_diary(diary: genshin.models.Diary, month: int) -> discord.Embe
         for j in range(round(length / 2 * i), round(length / 2 * (i + 1))):
             msg += f"{d.categories[j].name[0:15]}: {d.categories[j].amount} ({d.categories[j].percentage}%)\n"
         embed.add_field(name=f"Primogem Income Breakdown {i+1}", value=msg, inline=True)
-
-
     embed.add_field(name="\u200b", value="\u200b")
 
     return embed
@@ -155,7 +153,7 @@ async def parse_genshin_notes(
         resin_msg += (
             f"{emoji.notes.enemies_of_note}Weekly Boss Resin Discount: Remaining {notes.remaining_resin_discounts} times\n"
         )
-    resin_msg += f"{emoji.notes.realm_currency}Current Realm Currency: {notes.current_realm_currency}/{notes.max_realm_currency}\n"
+    resin_msg += f"{emoji.notes.realm_currency}Current Realm Currency: {notes.current_realm_currency}/{notes.max_realm_currency}\n" # noqa
     if not short_form and notes.max_realm_currency > 0:
         if notes.current_realm_currency >= notes.max_realm_currency:
             recover_time = "Already full!"
@@ -193,7 +191,7 @@ async def parse_genshin_notes(
             )
             expedition_embed.set_thumbnail(url=character_icon_url)
             expedition_embeds.append(expedition_embed)
-    
+
     expedition_summary = discord.Embed(color=0x28C828)
     expedition_summary.add_field(
         name=f"{emoji.notes.expedition} Expedition Completed：{exped_finished}/{len(notes.expeditions)}",

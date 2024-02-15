@@ -19,7 +19,7 @@ class SpiralAbyssCog(commands.Cog, name="abyss-record"):
     @app_commands.command(name="abyss-record", description="Check Spiral Abyss records")
     @app_commands.checks.cooldown(1, config.slash_cmd_cooldown)
     @app_commands.rename(game="game", season="time", user="user")
-    @app_commands.describe(season="Select THIS_SEASON, PREVIOUS_SEASON, or HISTORICAL_RECORD", user="Check data for other members; leave blank to check own data.")
+    @app_commands.describe(season="Select THIS_SEASON, PREVIOUS_SEASON, or SAVED_RECORD", user="Check data of other users.")
     @app_commands.choices(
         game=[
             Choice(name="Genshin Impact", value="genshin"),
@@ -28,7 +28,7 @@ class SpiralAbyssCog(commands.Cog, name="abyss-record"):
         season=[
             Choice(name="This Season Record", value="THIS_SEASON"),
             Choice(name="Previous Season Record", value="PREVIOUS_SEASON"),
-            Choice(name="Historical Record", value="HISTORICAL_RECORD"),
+            Choice(name="Saved Record", value="HISTORICAL_RECORD"),
         ],
     )
     @custom_log.SlashCommandLogger
@@ -61,7 +61,7 @@ class SpiralAbyssCog(commands.Cog, name="abyss-record"):
     ):
         if isinstance(error, app_commands.CommandOnCooldown):
             await interaction.response.send_message(
-                embed=EmbedTemplate.error(f"Command usage cooldown is {config.slash_cmd_cooldown} seconds; please try again later~"),
+                embed=EmbedTemplate.error(f"Command cooldown is {config.slash_cmd_cooldown} seconds; please try again later~"),
                 ephemeral=True,
             )
 

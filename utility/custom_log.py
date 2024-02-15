@@ -29,7 +29,6 @@ else:
 logging.basicConfig(format="%(message)s", level=logging.INFO)
 
 
-#   Log更改顏色用
 class ColorTool:
     def __init__(self, custom_colors: List[List[int | str | bool]] = []) -> None:
         for custom_color in custom_colors:
@@ -46,85 +45,83 @@ class ColorTool:
                 if color != "":
                     self._CUSTOM.append(color)
 
-    _STD_BLACK = "\033[30m"  
-    _STD_RED = "\033[31m"  
-    _STD_GREEN = "\033[32m"  
-    _STD_YELLOW = "\033[33m"  
-    _STD_BLUE = "\033[34m"  
-    _STD_MAGENTA = "\033[35m"  
-    _STD_CYAN = "\033[36m"  
-    _STD_LIGHT_GRAY = "\033[37m"  
-    
-    _STD_DARK_GRAY = "\033[90m"  
-    _STD_LIGHT_RED = "\033[91m"  
-    _STD_LIGHT_GREEN = "\033[92m"  
-    _STD_LIGHT_YELLOW = "\033[93m"  
-    _STD_LIGHT_BLUE = "\033[94m"  
-    _STD_LIGHT_MAGENTA = "\033[95m"  
-    _STD_LIGHT_CYAN = "\033[96m"  
-    _STD_WHITE = "\033[97m"  
-    _BLACK = "\033[38;2;12;12;12m"  
-    _RED = "\033[38;2;197;15;31m"  
-    _GREEN = "\033[38;2;19;161;14m"  
-    _YELLOW = "\033[38;2;193;156;0m"  
-    _BLUE = "\033[38;2;0;52;218m"  
-    _MAGENTA = "\033[38;2;136;23;152m"  
-    _CYAN = "\033[38;2;58;150;221m"  
-    _LIGHT_GRAY = "\033[38;2;204;204;204m"  
-    _DARK_GRAY = "\033[38;2;118;118;118m"  
-    _LIGHT_RED = "\033[38;2;231;72;86m"  
-    _LIGHT_GREEN = "\033[38;2;22;198;12m"  
-    _LIGHT_YELLOW = "\033[38;2;249;241;165m"  
-    _LIGHT_BLUE = "\033[38;2;59;120;255m"  
-    _LIGHT_MAGENTA = "\033[38;2;180;0;158m"  
-    _LIGHT_CYAN = "\033[38;2;97;214;214m"  
-    _WHITE = "\033[38;2;242;242;242m"  
-    _GRAY_SCALE_1 = "\033[38;2;32;32;32m"  
-    _GRAY_SCALE_2 = "\033[38;2;64;64;64m"  
-    _GRAY_SCALE_3 = "\033[38;2;96;96;96m"  
-    _GRAY_SCALE_4 = "\033[38;2;128;128;128m"  
-    _GRAY_SCALE_5 = "\033[38;2;160;160;160m"  
-    _GRAY_SCALE_6 = "\033[38;2;192;192;192m"  
-    _GRAY_SCALE_7 = "\033[38;2;224;224;224m"  
-    _MIKU_GREEN = "\033[38;2;57;197;187m"  
-    _TIAN_YI_BLUE = "\033[38;2;102;204;255m"  
-    _DISCORD_DARK = "\033[48;2;54;57;63m"  
-    _ORANGE = "\033[38;2;255;102;0m"  
-    _LIME = "\033[38;2;170;255;85m"  
-    _GOLD = "\033[38;2;255;221;51m"  
-    _PINK = "\033[38;2;255;128;255m"  
-    _ORANGE_RED = "\033[38;2;255;102;102m"  
-    _WHEAT_YELLOW = "\033[38;2;238;255;85m"  
-    _GRASS_GREEN = "\033[38;2;102;255;102m"  
-    _BRIGHT_ORANGE = "\033[38;2;255;187;102m"  
-    _BRIGHT_CYAN_GREEN = "\033[38;2;136;255;255m"  
-    _BRIGHT_BLUE = "\033[38;2;51;204;255m"  
-    _BRIGHT_MAGENTA = "\033[38;2;221;51;221m"  
-    _BRIGHT_PURPLE = "\033[38;2;187;187;255m"  
-    _BRIGHT_GREEN = "\033[38;2;187;255;187m"  
-    _BRIGHT_RED = "\033[38;2;255;187;187m"  
-    _BRIGHT_CYAN = "\033[38;2;187;255;255m"  
-    _BRIGHT_PINK = "\033[38;2;255;187;255m"  
-    _BRIGHT_YELLOW = "\033[38;2;255;255;187m"  
-    
-    
-    RESET = f"\033[0m{_WHITE}"  
-    _REVERSE = "\033[30;47m"  
-    _BOLD = "\033[1m"  
-    _CUSTOM: List[str] = []  
-    
-    
-    SYSTEM = f"{_BRIGHT_PURPLE}【system】{RESET}"  
-    ERROR = f"{_RED}【error】{RESET}"  
-    OK = f"{_LIGHT_GREEN}【OK】{RESET}"  
-    EVENT = f"{_LIGHT_YELLOW}【event】{RESET}"  
-    COMMAND = f"{_BRIGHT_BLUE}【command】{RESET}"  
-    EXCEPTION = f"{_BRIGHT_MAGENTA}【exception】{RESET}"  
-    INFO = f"{_BRIGHT_CYAN_GREEN}【info】{RESET}"  
-    DEBUG = f"{_LIGHT_RED}【debug】{RESET}"  
-    TEST = f"{_GOLD}【test】{RESET}"  
-    WARN = f"{_ORANGE}【warn】{RESET}"  
-    INTERACTION = f"{_LIME}【interaction】{RESET}"  
+    _STD_BLACK = "\033[30m"
+    _STD_RED = "\033[31m"
+    _STD_GREEN = "\033[32m"
+    _STD_YELLOW = "\033[33m"
+    _STD_BLUE = "\033[34m"
+    _STD_MAGENTA = "\033[35m"
+    _STD_CYAN = "\033[36m"
+    _STD_LIGHT_GRAY = "\033[37m"
+
+    _STD_DARK_GRAY = "\033[90m"
+    _STD_LIGHT_RED = "\033[91m"
+    _STD_LIGHT_GREEN = "\033[92m"
+    _STD_LIGHT_YELLOW = "\033[93m"
+    _STD_LIGHT_BLUE = "\033[94m"
+    _STD_LIGHT_MAGENTA = "\033[95m"
+    _STD_LIGHT_CYAN = "\033[96m"
+    _STD_WHITE = "\033[97m"
+    _BLACK = "\033[38;2;12;12;12m"
+    _RED = "\033[38;2;197;15;31m"
+    _GREEN = "\033[38;2;19;161;14m"
+    _YELLOW = "\033[38;2;193;156;0m"
+    _BLUE = "\033[38;2;0;52;218m"
+    _MAGENTA = "\033[38;2;136;23;152m"
+    _CYAN = "\033[38;2;58;150;221m"
+    _LIGHT_GRAY = "\033[38;2;204;204;204m"
+    _DARK_GRAY = "\033[38;2;118;118;118m"
+    _LIGHT_RED = "\033[38;2;231;72;86m"
+    _LIGHT_GREEN = "\033[38;2;22;198;12m"
+    _LIGHT_YELLOW = "\033[38;2;249;241;165m"
+    _LIGHT_BLUE = "\033[38;2;59;120;255m"
+    _LIGHT_MAGENTA = "\033[38;2;180;0;158m"
+    _LIGHT_CYAN = "\033[38;2;97;214;214m"
+    _WHITE = "\033[38;2;242;242;242m"
+    _GRAY_SCALE_1 = "\033[38;2;32;32;32m"
+    _GRAY_SCALE_2 = "\033[38;2;64;64;64m"
+    _GRAY_SCALE_3 = "\033[38;2;96;96;96m"
+    _GRAY_SCALE_4 = "\033[38;2;128;128;128m"
+    _GRAY_SCALE_5 = "\033[38;2;160;160;160m"
+    _GRAY_SCALE_6 = "\033[38;2;192;192;192m"
+    _GRAY_SCALE_7 = "\033[38;2;224;224;224m"
+    _MIKU_GREEN = "\033[38;2;57;197;187m"
+    _TIAN_YI_BLUE = "\033[38;2;102;204;255m"
+    _DISCORD_DARK = "\033[48;2;54;57;63m"
+    _ORANGE = "\033[38;2;255;102;0m"
+    _LIME = "\033[38;2;170;255;85m"
+    _GOLD = "\033[38;2;255;221;51m"
+    _PINK = "\033[38;2;255;128;255m"
+    _ORANGE_RED = "\033[38;2;255;102;102m"
+    _WHEAT_YELLOW = "\033[38;2;238;255;85m"
+    _GRASS_GREEN = "\033[38;2;102;255;102m"
+    _BRIGHT_ORANGE = "\033[38;2;255;187;102m"
+    _BRIGHT_CYAN_GREEN = "\033[38;2;136;255;255m"
+    _BRIGHT_BLUE = "\033[38;2;51;204;255m"
+    _BRIGHT_MAGENTA = "\033[38;2;221;51;221m"
+    _BRIGHT_PURPLE = "\033[38;2;187;187;255m"
+    _BRIGHT_GREEN = "\033[38;2;187;255;187m"
+    _BRIGHT_RED = "\033[38;2;255;187;187m"
+    _BRIGHT_CYAN = "\033[38;2;187;255;255m"
+    _BRIGHT_PINK = "\033[38;2;255;187;255m"
+    _BRIGHT_YELLOW = "\033[38;2;255;255;187m"
+
+    RESET = f"\033[0m{_WHITE}"
+    _REVERSE = "\033[30;47m"
+    _BOLD = "\033[1m"
+    _CUSTOM: List[str] = []
+
+    SYSTEM = f"{_BRIGHT_PURPLE}【system】{RESET}"
+    ERROR = f"{_RED}【error】{RESET}"
+    OK = f"{_LIGHT_GREEN}【OK】{RESET}"
+    EVENT = f"{_LIGHT_YELLOW}【event】{RESET}"
+    COMMAND = f"{_BRIGHT_BLUE}【command】{RESET}"
+    EXCEPTION = f"{_BRIGHT_MAGENTA}【exception】{RESET}"
+    INFO = f"{_BRIGHT_CYAN_GREEN}【info】{RESET}"
+    DEBUG = f"{_LIGHT_RED}【debug】{RESET}"
+    TEST = f"{_GOLD}【test】{RESET}"
+    WARN = f"{_ORANGE}【warn】{RESET}"
+    INTERACTION = f"{_LIME}【interaction】{RESET}"
 
     def RGB(self, Red: int = 255, Green: int = 255, Blue: int = 255, font: bool = True) -> str:
         if (
@@ -156,7 +153,7 @@ class LogTool(ColorTool):
         self.indent_noTag = "\n                "
         #   The following paragraph is used to see the effect. Remember to adjust the color yourself
         print(
-            f"\n              {self._MIKU_GREEN}Genshin Bot{self.RESET}              System : {self._LIGHT_CYAN}{platform.system()}\n"
+            f"\n              {self._MIKU_GREEN}Genshin Bot{self.RESET}              System : {self._LIGHT_CYAN}{platform.system()}\n" # noqa
             f" {self._LIGHT_RED}Python {self._GRAY_SCALE_6}v{platform.python_version()}"
             f"   {self._BRIGHT_BLUE}discord.py {self._GRAY_SCALE_6}v{version('discord.py')}"
             f"   {self._WHEAT_YELLOW}genshin.py {self._GRAY_SCALE_6}v{version('genshin')}"
@@ -330,7 +327,7 @@ class LogTool(ColorTool):
         success: bool | None = True,
         show_timestamp: bool = True,
     ) -> None:
-        
+
         if isinstance(ctx, commands.Context):
             if command_name is not None:
                 cmd_name = command_name
@@ -384,18 +381,18 @@ class LogTool(ColorTool):
         msg = ""
         if isinstance(ctx, commands.Context):
             if isinstance(error, commands.CommandInvokeError):
-                msg = f"{self.User(ctx.author)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error.original)}"
+                msg = f"{self.User(ctx.author)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error.original)}" # noqa
             elif isinstance(error, commands.CommandError):
-                msg = f"{self.User(ctx.author)} command caused error {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}"
+                msg = f"{self.User(ctx.author)} command caused error {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}" # noqa
             else:
-                msg = f"{self.User(ctx.author)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}"
+                msg = f"{self.User(ctx.author)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}" # noqa
         elif isinstance(ctx, discord.Interaction):
             if isinstance(error, discord.app_commands.AppCommandError):
-                msg = f"{self.User(ctx.user)}, command caused error {self.ErrorType(error)}：\n error message：{self.__ErrorMsg__(error)}"
+                msg = f"{self.User(ctx.user)}, command caused error {self.ErrorType(error)}：\n error message：{self.__ErrorMsg__(error)}" # noqa
             else:
-                msg = f"{self.User(ctx.user)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}"
+                msg = f"{self.User(ctx.user)} An error occurred during the execution of the command {self.ErrorType(error)}：\n error message:{self.__ErrorMsg__(error)}" # noqa
         self.Error(msg)
-        
+
     def FuncExceptionLog(
         self, user: str | int, func_name: str, error: genshin.GenshinException | Exception
     ) -> None:

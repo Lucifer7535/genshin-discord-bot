@@ -6,13 +6,14 @@ import aiohttp
 from enkanetwork.enum import EquipmentsType
 from enkanetwork.model import Stats
 from enkanetwork.model.character import CharacterInfo
-from enkanetwork.model.equipments import EquipmentsType
+from enkanetwork.model.equipments import EquipmentsType # noqa
 from PIL import Image, ImageChops, ImageFont, ImageOps
 from pydantic import BaseModel
 
 from .prop_reference import ELEMENT_REFERENCE, RELIQUARY_STATS
 
 current_path = os.path.dirname(os.path.abspath(__file__))
+
 
 class ActiveSet(BaseModel):
     name: str
@@ -28,15 +29,15 @@ async def check_asset(path: str, asset_url: str) -> None:
 
     if os.path.exists(path):
         return
-    
+
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    
+
     async with aiohttp.ClientSession() as session:
         async with session.get(asset_url) as response:
             if response.status != 200:
                 raise Exception("There was an error downloading the asset.")
             content = await response.read()
-    
+
     with open(path, "wb") as f:
         f.write(content)
 

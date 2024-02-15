@@ -33,7 +33,7 @@ async def get_realtime_notes(
         ):
             user.next_check_time = datetime.now() + timedelta(hours=1)
             await Database.insert_or_replace(user)
-        else:  
+        else:
             user.next_check_time = datetime.now() + timedelta(hours=5)
             await Database.insert_or_replace(user)
             raise e
@@ -44,7 +44,7 @@ def cal_next_check_time(remaining: timedelta, user_threshold: int) -> datetime:
     remaining_hours: float = remaining.total_seconds() / 3600
     if remaining_hours > user_threshold:
         return datetime.now() + remaining - timedelta(hours=user_threshold)
-    else:  
+    else:
         interval: float = float(user_threshold / 3)
         user_threshold_f: float = float(user_threshold)
         if interval > 0.0:

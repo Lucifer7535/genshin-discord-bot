@@ -129,7 +129,7 @@ def draw_exploration_card(
         10: ["     Chenyu Vale:\n       Upper Vale", 0],
         11: ["         Chenyu Vale:\n    Southern Mountain", 0]
     }
-    offering_list = [["  Frostbearing\n         Tree", 0], ["  Sacred Sakura's\n           Favor", 0], ["  Lumenstone\n     Adjuvant", 0], ["Tree of Dreams", 0], ["Fountain of Lucine", 0]]
+    offering_list = [["  Frostbearing\n         Tree", 0], ["  Sacred Sakura's\n           Favor", 0], ["  Lumenstone\n     Adjuvant", 0], ["Tree of Dreams", 0], ["Fountain of Lucine", 0]] # noqa
     large_font_size = 35
     for e in user_stats.explorations:
         if e.id not in explored_list:
@@ -146,7 +146,7 @@ def draw_exploration_card(
             offering_list[3][1] = e.offerings[0].level
         if e.id == 9 and len(e.offerings) >= 2:
             offering_list[4][1] = e.offerings[0].level
-    
+
     stat_list: list[tuple[str, float, str]] = []
     for id, e in explored_list.items():
         if len(e[0]) > 12:

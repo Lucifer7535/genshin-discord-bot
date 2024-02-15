@@ -25,9 +25,9 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
         self.bot = bot
 
     # Set up slash commands for automatic scheduling functions
-    @app_commands.command(name="schedule", description="Set up scheduling functions (Hoyolab daily check-in, resin full reminder)")
+    @app_commands.command(name="schedule", description="Set up scheduling functions (Hoyolab daily check-in, resin full reminder)") # noqa
     @app_commands.rename(function="function", switch="switch")
-    @app_commands.describe(function="Choose the function to execute in the schedule", switch="Choose to turn on or off this function")
+    @app_commands.describe(function="Choose the function to execute in the schedule", switch="Choose to turn on or off this function") # noqa
     @app_commands.choices(
         function=[
             Choice(name="① Display Usage Instructions", value="HELP"),
@@ -48,12 +48,12 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
         msg: str | None  # Message to be sent to the user
         if function == "HELP":  # Explanation of scheduling functions
             msg = (
-                "· The schedule will execute functions at specific times, and the results will be pushed to the channel where the command is set.\n"
-                "· Before setting, please make sure the bot has permission to speak in that channel. If the message push fails, the bot will automatically remove the schedule setting.\n"
+                "· The schedule will execute functions at specific times, and the results will be pushed to the channel where the command is set.\n" # noqa
+                "· Before setting, please make sure the bot has permission to speak in that channel. If the message push fails, the bot will automatically remove the schedule setting.\n" # noqa
                 "· If you want to change the push channel, please reset the command in the new channel.\n\n"
                 f"· Daily Auto Check-in: Automatically check-in every day according to the time you set. "
-                f'Before setting, please use the {get_app_command_mention("daily-checkin")} command to check if the bot can check in for you.\n'
-                f'· Instant Note Reminder: Sends a reminder when it exceeds the set value. Before setting, use {get_app_command_mention("notes")} '
+                f'Before setting, please use the {get_app_command_mention("daily-checkin")} command to check if the bot can check in for you.\n' # noqa
+                f'· Instant Note Reminder: Sends a reminder when it exceeds the set value. Before setting, use {get_app_command_mention("notes")} ' # noqa
                 f"to confirm that the bot can read your instant note information.\n\n"
                 f"· Check-in Captcha Problem: Now there is a captcha problem with Genshin Impact check-in. You need to use "
                 f"{get_app_command_mention('daily-checkin')} command, select 'Set Captcha' in the options."
@@ -68,7 +68,7 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
                 msg_sent = await interaction.channel.send(embed=EmbedTemplate.normal("Testing message push..."))  # type: ignore
             except Exception:
                 await interaction.response.send_message(
-                    embed=EmbedTemplate.error("The bot cannot push messages in this channel. Please check if the bot or this channel has 'Send Messages' and 'Embed Links' permissions.")
+                    embed=EmbedTemplate.error("The bot cannot push messages in this channel. Please check if the bot or this channel has 'Send Messages' and 'Embed Links' permissions.") # noqa
                 )
             else:
                 await interaction.response.send_message(
@@ -182,8 +182,7 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
                     embed=EmbedTemplate.normal("Star Rail instant note check reminder has been disabled")
                 )
 
-    # Users with channel manage message permissions can use this command to remove the channel schedule settings for a specific user
-    @app_commands.command(name="remove-schedule-settings", description="For administrators only, remove the schedule settings for a specific user")
+    @app_commands.command(name="remove-schedule-settings", description="For administrators only, remove the schedule settings for a specific user") # noqa
     @app_commands.rename(function="function", user="user")
     @app_commands.describe(function="Choose the function to remove")
     @app_commands.choices(
@@ -230,10 +229,9 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
                 embed=EmbedTemplate.normal(f"Star Rail instant note check reminder for {user.name} has been disabled")
             )
 
-    # Users with channel manage message permissions can use this command to move the messages of all scheduled users in the channel to another channel
-    @app_commands.command(name="move-schedule-messages", description="For administrators only, move the messages of all scheduled users in this channel to another channel")
+    @app_commands.command(name="move-schedule-messages", description="For administrators only, move the messages of all scheduled users in this channel to another channel") # noqa
     @app_commands.rename(function="function", dest_channel="destination_channel")
-    @app_commands.describe(function="Choose the function to move", dest_channel="Choose the channel where you want to move the user messages notification")
+    @app_commands.describe(function="Choose the function to move", dest_channel="Choose the channel where you want to move the user messages notification") # noqa
     @app_commands.choices(
         function=[
             Choice(name="All", value="ALL"),
@@ -281,7 +279,7 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
 
         await interaction.response.send_message(
             embed=EmbedTemplate.normal(
-                f"All user {function} notification messages in this channel have been successfully moved to {dest_channel.mention} channel"
+                f"All user {function} notification messages in this channel have been successfully moved to {dest_channel.mention} channel" # noqa
             )
         )
 

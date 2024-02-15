@@ -13,7 +13,7 @@ class Dropdown(discord.ui.Select):
     def __init__(self, notices: Sequence[genshin.models.Announcement], placeholder: str):
         self.notices = notices
         options = [
-            discord.SelectOption(label=notice.subtitle[:96]+"...", description=notice.title[:96]+"...", value=str(i))
+            discord.SelectOption(label=notice.subtitle[:96] + "...", description=notice.title[:96] + "...", value=str(i))
             for i, notice in enumerate(notices)
         ]
         super().__init__(placeholder=placeholder, options=options[:25])
@@ -36,7 +36,7 @@ class View(discord.ui.View):
             and (interaction.created_at - self.last_response_time).seconds < 3
         ):
             await interaction.response.send_message(
-                embed=EmbedTemplate.normal("For a short time (too many people), please try it for a few seconds later ..."), ephemeral=True
+                embed=EmbedTemplate.normal("For a short time (too many people), please try it for a few seconds later ..."), ephemeral=True # noqa
             )
             return False
         else:

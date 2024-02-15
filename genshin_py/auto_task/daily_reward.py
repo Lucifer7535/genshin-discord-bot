@@ -48,7 +48,7 @@ class DailyReward:
 
             _log_message = (
                 f"Automatic sign-in completed: {sum(cls._total.values())} people signed in, "
-                + f"including {sum(cls._honkai_count.values())} for Honkai Impact 3 and {sum(cls._starrail_count.values())} for Star Rail.\n"
+                + f"including {sum(cls._honkai_count.values())} for Honkai Impact 3 and {sum(cls._starrail_count.values())} for Star Rail.\n" # noqa
             )
             for host in cls._total.keys():
                 _log_message += f"- {host}：{cls._total.get(host)}、{cls._honkai_count.get(host)}、{cls._starrail_count.get(host)}\n"
@@ -75,18 +75,18 @@ class DailyReward:
                     LOG.Error(f"Error occurred during testing API {host} for DailyReward automatic scheduling: {e}")
                     return
 
-        cls._total[host] = 0  
-        cls._honkai_count[host] = 0  
-        cls._starrail_count[host] = 0  
-        MAX_API_ERROR_COUNT: Final[int] = 20  
-        api_error_count = 0  
+        cls._total[host] = 0
+        cls._honkai_count[host] = 0
+        cls._starrail_count[host] = 0
+        MAX_API_ERROR_COUNT: Final[int] = 20
+        api_error_count = 0
 
         while True:
             user = await queue.get()
             try:
                 message = await cls._claim_daily_reward(host, user)
             except Exception as e:
-                await queue.put(user)  
+                await queue.put(user)
                 api_error_count += 1
                 LOG.Error(f"Remote API: Error occurred at {host} ({api_error_count}/{MAX_API_ERROR_COUNT})")
                 if api_error_count >= MAX_API_ERROR_COUNT:

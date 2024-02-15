@@ -65,7 +65,7 @@ class AbyssFloorDropdown(discord.ui.Select):
         save_or_remove: Literal["SAVE", "REMOVE"],
     ):
         # The first option is displayed as save or remove record based on the parameter
-        _description = "Save this record to the database, can be viewed later" if save_or_remove == "SAVE" else "Remove this Spiral Abyss record from the database"
+        _description = "Save this record to database, can be viewed later" if save_or_remove == "SAVE" else "Delete from database"
         option = [
             discord.SelectOption(
                 label=f"{'📁 Save Record' if save_or_remove == 'SAVE' else '❌ Remove Record'}",

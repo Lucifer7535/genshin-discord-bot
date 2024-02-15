@@ -5,10 +5,6 @@ Revises: fb6f7c8b91f2
 Create Date: 2024-01-30 23:59:53.304596
 
 """
-from alembic import op
-import sqlalchemy as sa
-
-
 # revision identifiers, used by Alembic.
 revision = '1f8b10376483'
 down_revision = 'fb6f7c8b91f2'

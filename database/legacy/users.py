@@ -142,9 +142,9 @@ class UsersTable:
         check_uid=True,
     ) -> Tuple[bool, Optional[str]]:
         if user is None:
-            return False, f'User not found. Please set the Cookie (use {get_app_command_mention("cookie-login")} for instructions).'
+            return False, f'User not found. Please set the Cookie (use {get_app_command_mention("cookie-login")} for instructions).' # noqa
         if check_cookie and not user.cookie:
-            return False, f'Cookie not found. Please set the Cookie (use {get_app_command_mention("cookie-login")} for instructions).'
+            return False, f'Cookie not found. Please set the Cookie (use {get_app_command_mention("cookie-login")} for instructions).' # noqa
         if check_uid and user.uid is None:
             return False, f'UID for Genshin Impact not found. Please set the UID using {get_app_command_mention("uid-settings")}.'
         await self.update(user.id, last_used_time=True)

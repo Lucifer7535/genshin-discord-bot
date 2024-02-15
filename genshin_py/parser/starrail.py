@@ -89,14 +89,14 @@ def parse_starrail_character(character: genshin.models.StarRailDetailCharacter) 
     embed.add_field(
         name=f"{character.rarity}★ {character.name}",
         inline=True,
-        value = f"Constellation: {character.rank}\nLevel: Lv. {character.level}"
+        value=f"Constellation: {character.rank}\nLevel: Lv. {character.level}"
     )
     if character.equip:
         lightcone = character.equip
         embed.add_field(
-            name = f"Light Cone: {lightcone.name}",
-            inline = True,
-            value = f"Constellation: {lightcone.rank} Level\nLevel: Lv. {lightcone.level}"
+            name=f"Light Cone: {lightcone.name}",
+            inline=True,
+            value=f"Constellation: {lightcone.rank} Level\nLevel: Lv. {lightcone.level}"
         )
 
     if character.rank > 0:

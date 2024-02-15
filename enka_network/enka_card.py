@@ -7,13 +7,11 @@ from io import BytesIO
 from enkanetwork import Assets, EnkaNetworkResponse, Language
 from enkanetwork.enum import DigitType, EquipmentsType
 from enkanetwork.model.character import CharacterInfo
-from enkanetwork.model.equipments import Equipments, EquipmentsType, EquipType
+from enkanetwork.model.equipments import Equipments, EquipmentsType, EquipType  # noqa
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance
 
 from .prop_reference import RARITY_REFERENCE, SUBST_ORDER
-from .utils import (fade_asset_icon, fade_character_art, format_statistics,
-                   get_active_artifact_sets, get_font, get_stat_filename,
-                   open_image, scale_image, current_path)
+from .utils import (fade_asset_icon, fade_character_art, format_statistics, get_active_artifact_sets, get_font, get_stat_filename, open_image, scale_image, current_path) # noqa
 
 
 async def generate_image(
@@ -187,7 +185,7 @@ async def generate_image(
         )
 
     """ Talents Section """
-    talent_overlay = await open_image(f"attributes/Assets/enka_talent_overlay.png")
+    talent_overlay = await open_image(f"attributes/Assets/enka_talent_overlay.png") # noqa
     talent_overlay = scale_image(talent_overlay, fixed_height=80)
 
     for index, skill in enumerate(character.skills):
@@ -476,9 +474,8 @@ async def generate_image(
     for artif_index, equipment_type in enumerate(positions):
         artifact = next(filter(
             lambda x: (
-                x.type == EquipmentsType.ARTIFACT and 
-                x.detail.artifact_type.value == equipment_type
-            ), 
+                x.type == EquipmentsType.ARTIFACT and x.detail.artifact_type.value == equipment_type
+            ),
             character.equipments
         ), None)
 
@@ -693,7 +690,7 @@ async def generate_image(
 
     foreground = Image.alpha_composite(foreground, textground)
     result = Image.alpha_composite(background, foreground)
-    
+
     if save_locally:
         output_path = current_path + "/output"
         if not os.path.exists(output_path):
@@ -702,17 +699,17 @@ async def generate_image(
         filename = f"{character.name}_{timestamp}"
         result.save(f"{output_path}/{filename}.png", format="png")
 
-    """ 
+    """
     If you're using an async environment, might be worth mentioning
     that it is ideal to save the image into a BytesIO object and then
     return that buffer object instead. This way, you can send
     the image to the user without having to save it to the disk.
-    
+
     Sample Example:
         output = BytesIO() # <- Create a buffer object
         Image.alpha_composite(background, foreground).save(output, format="png") # <- Save image to the buffer object "output"
         output.seek(0) # <- Move the pointer to the beginning of the buffer object
-        
+
         return output
     """
     buffer = BytesIO()
