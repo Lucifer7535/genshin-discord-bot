@@ -32,7 +32,7 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
             hours=user.threshold_resin, seconds=10
         ):
             msg += (
-                "The resin is full!" if notes.remaining_resin_recovery_time <= timedelta(0) else "The resin is almost full!"
+                "The resin is full!\n" if notes.remaining_resin_recovery_time <= timedelta(0) else "The resin is almost full!\n"
             )
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
@@ -44,9 +44,9 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
             hours=user.threshold_currency, seconds=10
         ):
             msg += (
-                "Realm currency is full!"
+                "Realm currency is full!\n"
                 if notes.remaining_realm_currency_recovery_time <= timedelta(0)
-                else "Realm currency is almost full!"
+                else "Realm currency is almost full!\n"
             )
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
@@ -64,9 +64,9 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
             hours=user.threshold_transformer, seconds=10
         ):
             msg += (
-                "The parametric transformer has been reset!"
+                "The parametric transformer has been reset!\n"
                 if notes.remaining_transformer_recovery_time <= timedelta(0)
-                else "The parametric transformer is about to be reset!"
+                else "The parametric transformer is about to be reset!\n"
             )
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
@@ -82,7 +82,7 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
             hours=user.threshold_expedition, seconds=10
         ):
             msg += (
-                "Exploration and dispatch are finished!" if longest_expedition.remaining_time <= timedelta(0) else "Exploartion and dispatch is about to be completed!" # noqa
+                "Exploration and dispatch are finished!\n" if longest_expedition.remaining_time <= timedelta(0) else "Exploartion and dispatch is about to be completed!\n" # noqa
             )
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
@@ -92,7 +92,7 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
     if isinstance(user.check_commission_time, datetime):
         if datetime.now() >= user.check_commission_time:
             if not notes.claimed_commission_reward:
-                msg += "Today's commission tasks has not been completed!"
+                msg += "Today's commission tasks has not been completed!\n"
             user.check_commission_time += timedelta(days=1)
         next_check_time.append(user.check_commission_time)
 
