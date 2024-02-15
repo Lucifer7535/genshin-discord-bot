@@ -12,7 +12,7 @@ T = TypeVar("T", bound=GenshinDbBase)
 
 
 class GenshinDbListBase(BaseModel, Generic[T]):
-    
+
     __root__: List[T]
     _name_item_dict: Dict[str, T] = PrivateAttr({})
 

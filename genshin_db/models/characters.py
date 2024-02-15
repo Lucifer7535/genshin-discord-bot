@@ -75,6 +75,5 @@ class Character(GenshinDbBase):
         return v
 
 
-
 class Characters(GenshinDbListBase[Character]):
     __root__: List[Character]

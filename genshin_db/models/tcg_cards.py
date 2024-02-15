@@ -37,6 +37,7 @@ class CharacterCard(GenshinDbBase):
     talents: list[Talent] = Field(alias="skills")
     images: Images
     version: str
+
     @validator("story_text", pre=True)
     def remove_gender_tag(cls, v: str) -> str:
         return v.replace("{F#妳}{M#你}", "你")

@@ -31,6 +31,7 @@ class Combat(BaseModel):
     description: str
     attributes: Attributes
 
+
 class Passive(BaseModel):
     name: str
     description: str
