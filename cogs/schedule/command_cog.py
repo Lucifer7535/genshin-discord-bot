@@ -103,7 +103,7 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
                 options_view = DailyRewardOptionsView(interaction.user)
                 await interaction.response.send_message(
                     "Please choose in order:\n"
-                    "1. The game to check in (Please choose 1~3 items)\n"
+                    "1. Games for Check-in (Multiple Selection Possible)\n"
                     "2. Check-in time\n"
                     f"3. Do you want the bot to tag you ({interaction.user.mention}) when checking in?",
                     view=options_view,
@@ -127,6 +127,8 @@ class ScheduleCommandCog(commands.Cog, name="schedule-settings"):
                     has_genshin=options_view.has_genshin,
                     has_honkai3rd=options_view.has_honkai3rd,
                     has_starrail=options_view.has_starrail,
+                    has_themis=options_view.has_themis,
+                    has_themis_tw=options_view.has_themis_tw,
                 )
                 if checkin_user.next_checkin_time < datetime.now():
                     checkin_user.update_next_checkin_time()

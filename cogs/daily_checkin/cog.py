@@ -23,6 +23,8 @@ class DailyCheckinCog(commands.Cog, name="daily-checkin"):
             Choice(name="Genshin Impact", value="Genshin Impact"),
             Choice(name="Honkai Impact 3", value="Honkai Impact 3"),
             Choice(name="Starrail", value="Starrail"),
+            Choice(name="Tears of Themis(TW)", value="Tears of Themis(TW)"),
+            Choice(name="Tears of Themis(GLOBAL)", value="Tears of Themis(GLOBAL)"),
         ]
     )
     @app_commands.choices(
@@ -35,7 +37,7 @@ class DailyCheckinCog(commands.Cog, name="daily-checkin"):
     async def slash_daily(
         self,
         interaction: discord.Interaction,
-        game: Literal["Genshin Impact", "Honkai Impact 3", "Starrail"],
+        game: Literal["Genshin Impact", "Honkai Impact 3", "Starrail", "Tears of Themis(TW)", "Tears of Themis(GLOBAL)"],
         is_geetest: Literal["Yes", "No"] = "No",
         user: Optional[discord.User] = None,
     ):
@@ -43,6 +45,8 @@ class DailyCheckinCog(commands.Cog, name="daily-checkin"):
             "has_genshin": True if game == "Genshin Impact" else False,
             "has_honkai3rd": True if game == "Honkai Impact 3" else False,
             "has_starrail": True if game == "Starrail" else False,
+            "has_themis": True if game == "Tears of Themis(GLOBAL)" else False,
+            "has_themis_tw": True if game == "Tears of Themis(TW)" else False,
             "is_geetest": True if is_geetest == "Yes" else False,
         }
 

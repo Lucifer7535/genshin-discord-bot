@@ -38,6 +38,12 @@ async def get_client(
             cookie = user.cookie_starrail or user.cookie_default
             if str(uid)[0] in ["1", "2", "5"]:
                 client = genshin.Client(region=genshin.Region.CHINESE, lang="en-us")
+        case genshin.Game.THEMIS:
+            uid = 0
+            cookie = user.cookie_themis or user.cookie_default
+        case genshin.Game.THEMIS_TW:
+            uid = 0
+            cookie = user.cookie_themis or user.cookie_default
         case _:
             uid = 0
             cookie = user.cookie_default
@@ -100,6 +106,9 @@ async def set_cookie(user_id: int, cookie: str, games: Sequence[genshin.Game]) -
         if len(sr_accounts) > 1:
             character_list.append(f"{len(sr_accounts)} Star Rail characters")
 
+    if genshin.Game.THEMIS in games:
+        user.cookie_themis = cookie
+
     await Database.insert_or_replace(user)
     LOG.Info(f"{LOG.User(user_id)} Cookie set successfully")
 
@@ -118,6 +127,8 @@ async def claim_daily_reward(
     has_genshin: bool = False,
     has_honkai3rd: bool = False,
     has_starrail: bool = False,
+    has_themis: bool = False,
+    has_themis_tw: bool = False,
     is_geetest: bool = False,
 ) -> str:
 
@@ -134,7 +145,7 @@ async def claim_daily_reward(
     except Exception as e:
         LOG.FuncExceptionLog(user_id, "claimDailyReward: Hoyolab", e)
 
-    if any([has_genshin, has_honkai3rd, has_starrail]) is False:
+    if any([has_genshin, has_honkai3rd, has_starrail, has_themis, has_themis_tw]) is False:
         return "No game sign-in selected"
 
     gt_challenge: GeetestChallenge | None = None
@@ -158,6 +169,12 @@ async def claim_daily_reward(
         result += await _claim_reward(
             user_id, client, genshin.Game.STARRAIL, is_geetest, challenge
         )
+    if has_themis:
+        client = await get_client(user_id, game=genshin.Game.THEMIS, check_uid=False)
+        result += await _claim_reward(user_id, client, genshin.Game.THEMIS)
+    if has_themis_tw:
+        client = await get_client(user_id, game=genshin.Game.THEMIS_TW, check_uid=False)
+        result += await _claim_reward(user_id, client, genshin.Game.THEMIS_TW)
 
     return result
 
@@ -174,6 +191,8 @@ async def _claim_reward(
         genshin.Game.GENSHIN: "Genshin Impact",
         genshin.Game.HONKAI: "Honkai Impact 3",
         genshin.Game.STARRAIL: "Star Rail",
+        genshin.Game.THEMIS: "Tears of Themis(GLOBAL)",
+        genshin.Game.THEMIS_TW: "Tears of Themis(TW)",
     }
 
     try:

@@ -17,9 +17,10 @@ class GameSelectionView(discord.ui.View):
             discord.SelectOption(label="Genshin Impact", value="genshin"),
             discord.SelectOption(label="Honkai Impact 3rd", value="honkai3rd"),
             discord.SelectOption(label="Starrail", value="hkrpg"),
+            discord.SelectOption(label="Tears of Themis", value="tot"),
         ],
         min_values=1,
-        max_values=3,
+        max_values=4,
         placeholder="Please choose games (multiple choices allowed):",
     )
     async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):

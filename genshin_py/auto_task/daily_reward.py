@@ -19,6 +19,7 @@ class DailyReward:
     _total: ClassVar[dict[str, int]] = {}
     _honkai_count: ClassVar[dict[str, int]] = {}
     _starrail_count: ClassVar[dict[str, int]] = {}
+    _themis_count: ClassVar[dict[str, int]] = {}
 
     @classmethod
     async def execute(cls, bot: commands.Bot):
@@ -78,6 +79,7 @@ class DailyReward:
         cls._total[host] = 0
         cls._honkai_count[host] = 0
         cls._starrail_count[host] = 0
+        cls._themis_count[host] = 0
         MAX_API_ERROR_COUNT: Final[int] = 20
         api_error_count = 0
 
@@ -100,6 +102,7 @@ class DailyReward:
                     cls._total[host] += 1
                     cls._honkai_count[host] += int(user.has_honkai3rd)
                     cls._starrail_count[host] += int(user.has_starrail)
+                    cls._themis_count[host] += int(user.has_themis) + int(user.has_themis_tw)
                     await asyncio.sleep(config.schedule_loop_delay)
             finally:
                 queue.task_done()
@@ -112,6 +115,8 @@ class DailyReward:
                 has_genshin=user.has_genshin,
                 has_honkai3rd=user.has_honkai3rd,
                 has_starrail=user.has_starrail,
+                has_themis=user.has_themis,
+                has_themis_tw=user.has_themis_tw,
             )
             return message
         else:
@@ -131,9 +136,12 @@ class DailyReward:
                 "cookie_genshin": user_data.cookie_genshin,
                 "cookie_honkai3rd": user_data.cookie_honkai3rd,
                 "cookie_starrail": user_data.cookie_starrail,
+                "cookie_themis": user_data.cookie_themis,
                 "has_genshin": "true" if user.has_genshin else "false",
                 "has_honkai": "true" if user.has_honkai3rd else "false",
                 "has_starrail": "true" if user.has_starrail else "false",
+                "has_themis": "true" if user.has_themis else "false",
+                "has_themis_tw": "true" if user.has_themis_tw else "false",
             }
             if gt_challenge is not None:
                 payload.update(

@@ -35,6 +35,8 @@ class User(Base):
     """Cookie for using Honkai Impact 3rd commands on Hoyolab or Mihoyo website"""
     cookie_starrail: Mapped[str | None] = mapped_column(default=None)
     """Cookie for using Star Rail commands on Hoyolab or Mihoyo website"""
+    cookie_themis: Mapped[str | None] = mapped_column(default=None)
+    """Cookie used for tot commands on Hoyolab or miHoYo's website."""
 
     uid_genshin: Mapped[int | None] = mapped_column(default=None)
     """UID of Genshin Impact character"""
@@ -64,6 +66,10 @@ class ScheduleDailyCheckin(Base):
     """Whether to check-in Honkai Impact 3rd"""
     has_starrail: Mapped[bool] = mapped_column(default=False)
     """Whether to check-in Star Rail"""
+    has_themis: Mapped[bool] = mapped_column(default=False)
+    """Whether to check in for Tears of Themis(GLOBAL)"""
+    has_themis_tw: Mapped[bool] = mapped_column(default=False)
+    """Whether to check in for Tears of Themis(TW)"""
 
     def update_next_checkin_time(self) -> None:
         """Update the next check-in time to tomorrow"""

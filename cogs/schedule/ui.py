@@ -15,6 +15,8 @@ class DailyRewardOptionsView(discord.ui.View):
         self.has_genshin: bool = False
         self.has_honkai3rd: bool = False
         self.has_starrail: bool = False
+        self.has_themis: bool = False
+        self.has_themis_tw: bool = False
         self.hour: int = 8
         self.minute: int = 0
         self.is_mention: bool | None = None
@@ -29,10 +31,12 @@ class DailyRewardOptionsView(discord.ui.View):
             discord.SelectOption(label="Genshin Impact", value="Genshin Impact"),
             discord.SelectOption(label="Honkai Impact 3", value="Honkai Impact 3"),
             discord.SelectOption(label="Star Rail", value="Star Rail"),
+            discord.SelectOption(label="Tears of Themis(GLOBAL)", value="Tears of Themis(GLOBAL)"),
+            discord.SelectOption(label="Tears of Themis(TW)", value="Tears of Themis(TW)"),
         ],
 
         min_values=1,
-        max_values=3,
+        max_values=5,
         placeholder="Please choose the game(s) to sign in (multiple selections allowed):"
     )
     async def select_games_callback(
@@ -46,6 +50,10 @@ class DailyRewardOptionsView(discord.ui.View):
             self.has_honkai3rd = True
         if "Star Rail" in self.selected_games:
             self.has_starrail = True
+        if "Tears of Themis(GLOBAL)" in self.selected_games:
+            self.has_themis = True
+        if "Tears of Themis(TW)" in self.selected_games:
+            self.has_themis_tw = True
 
     @discord.ui.select(
         cls=discord.ui.Select,

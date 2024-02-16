@@ -29,7 +29,7 @@ class RedeemCode:
         msg = "Please click the following link to redeem code:\n> "
         for i, code in enumerate(codes):
             game_host = {genshin.Game.GENSHIN: "genshin", genshin.Game.STARRAIL: "hsr"}
-            msg += f"{i+1}. [{code}](https://{game_host.get(game)}.hoyoverse.com/gift?code={code})\n"
+            msg += f"> {i+1}. [{code}](https://{game_host.get(game)}.hoyoverse.com/gift?code={code})\n"
 
         embed = discord.Embed(color=0x8FCE00, description=msg)
         await interaction.response.send_message(embed=embed)
