@@ -285,9 +285,9 @@ async def draw_abyss_card(
                     constellation = next(
                         (c.constellation for c in characters if c.id == character.id), 0
                     )
-                    text = f"{constellation} Constellation {character.level} Level"
+                    text = f"C{constellation} Lv. {character.level}"
                 else:
-                    text = f"{character.level} Level"
+                    text = f"Lv. {character.level}"
                 draw_text(
                     img,
                     (x + character_size[0] / 2, y + character_size[1] * 0.90),
