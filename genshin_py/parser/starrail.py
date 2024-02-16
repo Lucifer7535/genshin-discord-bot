@@ -127,10 +127,26 @@ def parse_starrail_character(character: genshin.models.StarRailDetailCharacter) 
     return embed
 
 
-def parse_starrail_hall_overview(hall: genshin.models.StarRailChallenge) -> discord.Embed:
-    has_crown: bool = hall.total_battles == 10 and hall.total_stars == 30
-    desc: str = f"{hall.begin_time.datetime.strftime('%Y.%m.%d')} ~ {hall.end_time.datetime.strftime('%Y.%m.%d')}\n"
-    desc += f"Progress: {hall.max_floor}\n"
-    desc += f"Battles: {'👑 (10)' if has_crown else hall.total_battles} ★: {hall.total_stars}\n"
+def parse_starrail_hall_overview(
+    hall: genshin.models.StarRailChallenge | genshin.models.StarRailPureFiction,
+) -> discord.Embed:
+    "An overview of data analysis for the Forgotten Garden in the Starry Sky Railway, including stage progress, number of battles, obtained stars, and issue number." # noqa
+    # Check Crown
+    has_crown: bool = False
+    if isinstance(hall, genshin.models.StarRailChallenge):
+        if hall.total_stars == 36:
+            non_skip_battles = [floor.is_fast for floor in hall.floors].count(False)
+            has_crown = hall.total_battles == non_skip_battles
+    else:  # isinstance(hall, genshin.models.StarRailPureFiction)
+        if hall.total_stars == 12:
+            non_skip_battles = [floor.is_fast for floor in hall.floors].count(False)
+            has_crown = hall.total_battles == non_skip_battles
+    battle_nums = f"👑 ({hall.total_battles})" if has_crown else hall.total_battles
+
+    desc: str = (
+        f"{hall.begin_time.datetime.strftime('%Y.%m.%d')} ~ {hall.end_time.datetime.strftime('%Y.%m.%d')}\n"
+    )
+    desc += f"Floors Cleared: {hall.max_floor}\n"
+    desc += f"Number of Battles: {battle_nums} : {hall.total_stars}★\n"
     embed = discord.Embed(description=desc, color=0x934151)
     return embed
