@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any
 
 import discord
 import sentry_sdk
@@ -24,7 +24,7 @@ class ShowcaseCharactersDropdown(discord.ui.Select):
                 discord.SelectOption(
                     label=f"{character.rarity}★ Lv.{character.level} {character.name}",
                     value=str(i),
-                    emoji=emoji.starrail_elements.get(character.element),
+                    emoji=emoji.starrail_elements.get(character.element.name),
                 )
             )
         options.append(discord.SelectOption(label="Delete Character Cache Data", value="-2", emoji="❌"))
@@ -33,9 +33,10 @@ class ShowcaseCharactersDropdown(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction) -> None:
         index = int(self.values[0])
         if index >= 0:  # Character data
-            embed = self.showcase.get_character_stat_embed(index)
-            await interaction.response.edit_message(
-                embed=embed, view=ShowcaseView(self.showcase, index)
+            await interaction.response.defer()
+            embed, file = await self.showcase.get_character_card_embed_file(index)
+            await interaction.edit_original_response(
+                embed=embed, view=ShowcaseView(self.showcase, index), attachments=[file]
             )
         elif index == -1:  # Player Overview
             embed = self.showcase.get_player_overview_embed()
@@ -66,15 +67,34 @@ class ShowcaseCharactersDropdown(discord.ui.Select):
 class ShowcaseButton(discord.ui.Button):
     """Character Showcase Button"""
 
-    def __init__(self, label: str, function: Callable[..., discord.Embed], *args, **kwargs):
+    def __init__(self, label: str, showcase: Showcase, chatacter_index: int):
         super().__init__(style=discord.ButtonStyle.primary, label=label)
-        self.callback_func = function
-        self.callback_args = args
-        self.callback_kwargs = kwargs
+        self.label = label
+        self.showcase = showcase
+        self.character_index = chatacter_index
 
     async def callback(self, interaction: discord.Interaction) -> Any:
-        embed = self.callback_func(*self.callback_args, **self.callback_kwargs)
-        await interaction.response.edit_message(embed=embed, attachments=[])
+        match self.label:
+            case "Image":
+                await interaction.response.defer()
+                try:
+                    embed, file = await self.showcase.get_character_card_embed_file(
+                        self.character_index
+                    )
+                except Exception:
+                    embed = self.showcase.get_character_stat_embed(self.character_index)
+                    await interaction.edit_original_response(embed=embed, attachments=[])
+                else:
+                    await interaction.edit_original_response(embed=embed, attachments=[file])
+            case "Panel":
+                embed = self.showcase.get_character_stat_embed(self.character_index)
+                await interaction.response.edit_message(embed=embed, attachments=[])
+            case "Relic":
+                embed = self.showcase.get_relic_stat_embed(self.character_index)
+                await interaction.response.edit_message(embed=embed, attachments=[])
+            case "Stat":
+                embed = self.showcase.get_relic_score_embed(self.character_index)
+                await interaction.response.edit_message(embed=embed, attachments=[])
 
 
 class ShowcaseView(discord.ui.View):
@@ -83,6 +103,7 @@ class ShowcaseView(discord.ui.View):
     def __init__(self, showcase: Showcase, character_index: int | None = None):
         super().__init__(timeout=config.discord_view_long_timeout)
         if character_index is not None:
+            self.add_item(ShowcaseButton("Image", showcase, character_index))
             self.add_item(ShowcaseButton("Panel", showcase.get_character_stat_embed, character_index))
             self.add_item(ShowcaseButton("Relic", showcase.get_relic_stat_embed, character_index))
             self.add_item(ShowcaseButton("Stat", showcase.get_relic_score_embed, character_index))

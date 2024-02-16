@@ -1,5 +1,11 @@
+import io
+import json
+from typing import Tuple
+
 import discord
-from mihomo import MihomoAPI, StarrailInfoParsedV1
+from honkairail.src.tools.modalV2 import StarRailApiDataV2
+from hsrcard.hsr import HonkaiCard
+from mihomo import MihomoAPI, StarrailInfoParsed
 from mihomo import tools as mihomo_tools
 
 from database import Database, StarrailShowcase
@@ -9,18 +15,18 @@ class Showcase:
     def __init__(self, uid: int) -> None:
         self.uid = uid
         self.client = MihomoAPI()
-        self.data: StarrailInfoParsedV1
+        self.data: StarrailInfoParsed
         self.is_cached_data: bool = False
 
     async def load_data(self) -> None:
         srshowcase = await Database.select_one(
             StarrailShowcase, StarrailShowcase.uid.is_(self.uid)
         )
-        cached_data: StarrailInfoParsedV1 | None = None
+        cached_data: StarrailInfoParsed | None = None
         if srshowcase:
             cached_data = srshowcase.data
         try:
-            new_data = await self.client.fetch_user_v1(self.uid)
+            new_data = await self.client.fetch_user(self.uid)
         except Exception as e:
             if cached_data is None:
                 raise e from e
@@ -35,21 +41,19 @@ class Showcase:
 
     def get_player_overview_embed(self) -> discord.Embed:
         player = self.data.player
-        player_details = self.data.player_details
 
         description = (
             f"「{player.signature}」\n"
             f"Player's level:{player.level}\n"
-            f"Characters: {player_details.characters}\n"
-            f"Achievements achieved: {player_details.achievements}\n"
-            f"Simulated universe: {player_details.simulated_universes} world passed\n"
+            f"Characters: {player.characters}\n"
+            f"Achievements achieved: {player.achievements}\n"
         )
 
         if self.is_cached_data is True:
             description += "(Currently, the API cannot be connected.)\n"
 
         embed = discord.Embed(title=player.name, description=description)
-        embed.set_thumbnail(url=self.client.get_icon_url(player.icon))
+        embed.set_thumbnail(url=self.client.get_icon_url(player.avatar.icon))
 
         if len(self.data.characters) > 0:
             icon = self.data.characters[0].portrait
@@ -58,6 +62,31 @@ class Showcase:
         embed.set_footer(text=f"UID：{player.uid}")
 
         return embed
+
+    async def get_character_card_embed_file(
+        self, index: int
+    ) -> Tuple[discord.Embed, discord.File]:
+        """Retrieve character card data."""
+
+        embed = self.get_default_embed(index)
+        embed.set_thumbnail(url=None)
+
+        data_dict = self.data.dict(by_alias=True)
+        data_dict["player"]["space_info"] = {}
+        data_hsrcard = StarRailApiDataV2.parse_raw(json.dumps(data_dict, ensure_ascii=False))
+
+        async with HonkaiCard(lang="cht") as card_creater:
+            result = await card_creater.creat(self.uid, data_hsrcard, index)
+            image = result.card[0].card
+
+        fp = io.BytesIO()
+        image = image.convert("RGB")
+        image.save(fp, "jpeg", optimize=True, quality=90)
+        fp.seek(0)
+
+        embed.set_image(url="attachment://image.jpeg")
+        file = discord.File(fp, "image.jpeg")
+        return (embed, file)
 
     def get_character_stat_embed(self, index: int) -> discord.Embed:
         embed = self.get_default_embed(index)
@@ -80,20 +109,44 @@ class Showcase:
         embed.add_field(
             name="Skill",
             value="\n".join(
-                f"{trace.type}：Lv. {trace.level}"
+                f"{trace.type_text}：Lv. {trace.level}"
                 for trace in character.traces
-                if trace.type != "Secret technique"
+                if trace.type_text != "" and trace.type_text != "Secret Technique"
             ),
             inline=False,
         )
 
+        attr_dict = {
+            "Health": [0.0, 0.0],
+            "Attack": [0.0, 0.0],
+            "Defense": [0.0, 0.0],
+            "Speed": [0.0, 0.0],
+            "Critical Rate": [5.0, 0.0],
+            "Critical Damage": [50.0, 0.0],
+            "Energy Recovery Efficiency": [100.0, 0.0],
+        }
+        for stat in character.attributes:
+            if stat.name not in attr_dict:
+                attr_dict[stat.name] = [0.0, 0.0]
+            attr_dict[stat.name][0] += stat.value * 100 if stat.is_percent else stat.value
+
+        for stat in character.additions:
+            if stat.name not in attr_dict:
+                attr_dict[stat.name] = [0.0, 0.0]
+            attr_dict[stat.name][1] += stat.value * 100 if stat.is_percent else stat.value
+
+        # Apply damage increase to all damage increase attributes
+        if "Damage Increase" in attr_dict:
+            v = attr_dict["Damage Increase"][0] + attr_dict["Damage Increase"][1]
+            del attr_dict["Damage Increase"]
+            for key in attr_dict:
+                if "Damage Increase" in key:
+                    attr_dict[key][1] += v
+
         value = ""
-        for stat in character.stats:
-            if stat.addition is not None:
-                total = int(stat.base) + int(stat.addition)
-                value += f"{stat.name}：{total} ({stat.base} +{stat.addition})\n"
-            else:
-                value += f"{stat.name}：{stat.base}\n"
+        for k, v in attr_dict.items():
+            value += f"{k}: {round(v[0] + v[1], 1)}\n"
+
         embed.add_field(name="Attribute panel", value=value, inline=False)
 
         return embed
@@ -109,11 +162,11 @@ class Showcase:
 
         for relic in character.relics:
             name = (
-                relic.main_property.name.removesuffix("Increasing damage").removesuffix("efficiency").removesuffix("addition")
+                relic.main_affix.name.removesuffix("Damage Increase").removesuffix("Efficiency").removesuffix("Bonus")
             )
-            value = f"{relic.rarity}★ {name}+{relic.main_property.value}\n"
-            for prop in relic.sub_property:
-                value += f"{prop.name}+{prop.value}\n"
+            value = f"★{relic.rarity}{name}+{relic.main_affix.displayed_value}\n"
+            for prop in relic.sub_affixes:
+                value += f"{prop.name}+{prop.displayed_value}\n"
 
             embed.add_field(name=relic.name, value=value)
 
@@ -141,18 +194,26 @@ class Showcase:
         }
         crit_value: float = 0.0
 
-        base_hp = float(next(s for s in character.stats if s.name == "life value").base)
-        base_atk = float(next(s for s in character.stats if s.name == "Attack power").base)
-        base_def = float(next(s for s in character.stats if s.name == "Defense").base)
+        base_hp = float(
+            next(s.value for s in character.attributes if s.name == "life value")
+        )  # Base health value
+        base_atk = float(
+            next(s.value for s in character.attributes if s.name == "Attack power")
+        )  # Base attack value
+        base_def = float(
+            next(s.value for s in character.attributes if s.name == "Defense")
+        )  # Base defense value
 
         for relic in relics:
-            main = relic.main_property
+            main = relic.main_affix
             if main.name == "Crit rate":
-                crit_value += float(main.value.removesuffix("%")) * 2
+                crit_value += float(main.value) * 100 * 2
             if main.name == "Crit damage":
-                crit_value += float(main.value.removesuffix("%"))
-            for prop in relic.sub_property:
-                v = prop.value
+                crit_value += float(main.value) * 100
+            for prop in relic.sub_affixes:
+                v = prop.displayed_value
+                if v is None:
+                    continue
                 match prop.name:
                     case "life value":
                         p = float(v.removesuffix("%")) if v.endswith("%") else float(v) / base_hp
@@ -221,15 +282,14 @@ class Showcase:
         }
         embed = discord.Embed(
             title=f"{character.rarity}★ {character.name}",
-            color=color.get(character.element),
+            color=color.get(character.element.name),
         )
         embed.set_thumbnail(url=self.client.get_icon_url(character.icon))
 
         player = self.data.player
         embed.set_author(
             name=f"{player.name} Role display cabinet",
-            url=f"https://api.mihomo.me/sr_panel/{player.uid}?lang=en&chara_index={index}",
-            icon_url=self.client.get_icon_url(player.icon),
+            icon_url=self.client.get_icon_url(player.avatar.icon),
         )
         embed.set_footer(text=f"{player.name}．Lv. {player.level}．UID: {player.uid}")
 
