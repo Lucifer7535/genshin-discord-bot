@@ -1,6 +1,7 @@
-# GENSHIN HELPER BOT
+# GENSHIN DISCORD BOT
+Invite the Bot to your own server
 
-Credits : https://github.com/KT-Yeh/Genshin-Discord-Bot
+![https://discord.com/api/oauth2/authorize?client_id=1199307310980419605&permissions=2147765313&scope=bot%20applications.commands](https://dcbadge.vercel.app/api/shield/1199307310980419605?bot=true&style=flat&theme=discord-inverted)
 
 ## What does this bot do?
 This bot can be used to check various information from Genshin Impact, Honkai Impact 3rd & Honkai Star Rail directly in Discord channels, including:
@@ -10,7 +11,7 @@ This bot can be used to check various information from Genshin Impact, Honkai Im
 
     - <u>**Star Rail:**</u> <br> Includes Exploration Power, Commission Execution.
 
-- Daily automatic check-in for Hoyolab (includes check-ins for Honkai Impact 3rd and Star Rail)
+- Daily automatic check-in for Hoyolab (includes check-ins for Genshin Impact, Honkai Impact 3rd, Star Rail & Tears of Themis).
 
 - Automatic checks for real-time expeditions (Genshin Impact, Star Rail), Resins, Realm Currency, Parametric Transformer, and Expedition completion. Sends reminders when they are close to being full/complete.
 
@@ -271,7 +272,20 @@ Tag the bot in a regular channel, for example: @bot_username jsk ping.
 </details>
 
 ## Acknowledgments
-- Genshin API used from: https://github.com/thesadru/genshin.py
-- Discord API used from: https://github.com/Rapptz/discord.py
-- Enka Network API used from: https://github.com/EnkaNetwork/API-docs
-- Genshin-DB API used from: https://github.com/theBowja/genshin-db
+SOURCE CODE:
+- [KT-Yeh/Genshin-Discord-Bot](https://github.com/KT-Yeh/Genshin-Discord-Bot)
+
+API：
+- Hoyolab: https://github.com/thesadru/genshin.py
+- Discord: https://github.com/Rapptz/discord.py
+- Enka Network: https://github.com/EnkaNetwork/API-docs
+- Mihomo: https://march7th.xiaohei.moe/en/resource/mihomo_api.html
+- Genshin-DB: https://github.com/theBowja/genshin-db
+
+Card：
+- [hattvr/enka-card](https://github.com/hattvr/enka-card)
+- [DEViantUA/HSRCard](https://github.com/DEViantUA/HSRCard)
+- [DEViantUA/GenshinPyRail](https://github.com/DEViantUA/GenshinPyRail)
+
+Misc：
+- [Apollo-Roboto/discord.py-ext-prometheus](https://github.com/Apollo-Roboto/discord.py-ext-prometheus)
