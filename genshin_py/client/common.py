@@ -121,6 +121,21 @@ async def set_cookie(user_id: int, cookie: str, games: Sequence[genshin.Game]) -
     return result
 
 
+@generalErrorHandler
+async def redeem_code(
+    user_id: int, client: genshin.Client, code: str, game: genshin.Game = genshin.Game.GENSHIN
+) -> str:
+    try:
+        await client.redeem_code(code, client.uids.get(game), game=game)
+    except genshin.errors.GenshinException as e:
+        if "Redemption code" in e.original:
+            raise genshin.errors.RedemptionException(
+                {"retcode": e.retcode, "message": e.original}, e.msg
+            ) from e
+        raise
+    return "The Redemption code is used Successfully.!"
+
+
 async def claim_daily_reward(
     user_id: int,
     *,

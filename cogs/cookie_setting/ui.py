@@ -40,13 +40,13 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         max_length=20,
     )
 
-    ltoken_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="ltoken_v2",
-        placeholder="Paste the obtained ltoken_v2",
+    account_id_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
+        label="account_id_v2",
+        placeholder="Paste the obtained account_id_v2",
         style=discord.TextStyle.short,
         required=False,
-        min_length=30,
-        max_length=150,
+        min_length=5,
+        max_length=20,
     )
 
     ltmid_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
@@ -58,9 +58,18 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         max_length=20,
     )
 
-    cookie: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
-        label="Cookie",
-        placeholder="Paste complete Cookie. Not Required.",
+    ltoken_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
+        label="ltoken_v2",
+        placeholder="Paste the obtained ltoken_v2",
+        style=discord.TextStyle.short,
+        required=False,
+        min_length=30,
+        max_length=150,
+    )
+
+    cookie_token_v2: discord.ui.TextInput[discord.ui.Modal] = discord.ui.TextInput(
+        label="cookie_token_v2",
+        placeholder="Paste the obtained cookie_token_v2.",
         style=discord.TextStyle.long,
         required=False,
         min_length=50,
@@ -76,9 +85,8 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
             embed=EmbedTemplate.normal("Setting up, please wait..."), ephemeral=True
         )
 
-        # Append ltuid_v2 and ltoken_v2 to cookie
         v2_str = ""
-        cookie = self.cookie.value
+        cookie = ""
         if len(self.ltoken_v2.value) > 0:
             if self.ltoken_v2.value.startswith("v2"):
                 v2_str = "_v2"
@@ -86,12 +94,15 @@ class CookieModal(discord.ui.Modal, title="Submit Cookie"):
         if len(self.ltuid_v2.value) > 0:
             if self.ltuid_v2.value.isdigit() is True:
                 cookie += f" ltuid{v2_str}={self.ltuid_v2.value};"
-            else:
-                cookie += f" ltmid_v2={self.ltuid_v2.value};"
+        if len(self.account_id_v2.value) > 0:
+            if self.account_id_v2.value.isdigit() is True:
+                cookie += f" account_id{v2_str}={self.account_id_v2.value};"
         if len(self.ltmid_v2.value) > 0:
             cookie += f" ltmid_v2={self.ltmid_v2.value};"
+        if len(self.cookie_token_v2.value) > 0:
+            cookie += f" cookie_token_v2={self.cookie_token_v2.value};"
 
-        LOG.Info(f"Setting up {LOG.User(interaction.user)}'s Cookie: {self.cookie.value}")
+        LOG.Info(f"Setting up {LOG.User(interaction.user)}'s Cookie: {cookie}")
         try:
             trimmed_cookie = await self._trim_cookies(cookie)
             if trimmed_cookie is None:

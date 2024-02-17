@@ -1,38 +1,66 @@
 import re
-
+import asyncio
 import discord
 import genshin
 from discord.ext import commands
+import genshin_py.client as genshin_py
+import genshin_py.errors
+from utility import EmbedTemplate, custom_log
+from typing import Literal, Optional
 from discord import app_commands
 from discord.app_commands import Choice
 
-from utility import EmbedTemplate, custom_log
-from typing import Literal, Optional
 
+async def redeem(
+    interaction: discord.Interaction,
+    user: discord.User | discord.Member,
+    code: str,
+    game: genshin.Game,
+):
+    code = re.sub(r"(https://){0,1}genshin.hoyoverse.com(/.*){0,1}/gift\?code=", "", code)
+    code = re.sub(r"(https://){0,1}hsr.hoyoverse.com(/.*){0,1}/gift\?code=", "", code)
+    codes = re.findall(r"[A-Za-z0-9]{5,30}", code)
+    if len(codes) == 0:
+        await interaction.response.send_message(embed=EmbedTemplate.error("No redemption code detected. Please re-enter."))
+        return
 
-class RedeemCode:
-    @staticmethod
-    async def redeem(
-        interaction: discord.Interaction,
-        user: discord.User | discord.Member,
-        code: str,
-        game: genshin.Game,
-    ):
-        code = re.sub(r"(https://){0,1}genshin.hoyoverse.com(/.*){0,1}/gift\?code=", "", code)
-        code = re.sub(r"(https://){0,1}hsr.hoyoverse.com(/.*){0,1}/gift\?code=", "", code)
-        codes = re.findall(r"[A-Za-z0-9]{5,30}", code)
-        if len(codes) == 0:
-            await interaction.response.send_message(embed=EmbedTemplate.error("No redemption code detected. Please re-enter."))
-            return
+    await interaction.response.defer()
 
-        codes = codes[:5] if len(codes) > 5 else codes
-        msg = "Please click the following link to redeem code:\n> "
-        for i, code in enumerate(codes):
-            game_host = {genshin.Game.GENSHIN: "genshin", genshin.Game.STARRAIL: "hsr"}
-            msg += f"> {i+1}. [{code}](https://{game_host.get(game)}.hoyoverse.com/gift?code={code})\n"
+    codes = codes[:5] if len(codes) > 5 else codes
+    msg = ""
+    invalid_cookie_msg = ""
+    try:
+        genshin_client = await genshin_py.get_client(user.id, game=game, check_uid=False)
+    except Exception as e:
+        await interaction.edit_original_response(embed=EmbedTemplate.error(e))
+        return
+
+    for i, code in enumerate(codes):
+        if i > 0:
+            await interaction.edit_original_response(
+                embed=discord.Embed(color=0xFCC766, description=f"{msg} Waiting for 5 seconds of cooling time to use redeem code {i+1}.....") # noqa
+            )
+            await asyncio.sleep(5)
+        try:
+            genshin_client = await genshin_py.get_client(user.id, game=game, check_uid=False)
+            result = "✅ " + await genshin_py.redeem_code(user.id, genshin_client, code, game)
+        except genshin_py.errors.GenshinAPIException as e:
+            result = "❌ "
+            if isinstance(e.origin, genshin.errors.InvalidCookies):
+                result += "Invalid cookie"
+                invalid_cookie_msg = str(e.origin)
+            else:
+                result += e.message
+        except Exception as e:
+            result = "❌ " + str(e)
+
+        msg += f"{code} : {result}\n"
 
         embed = discord.Embed(color=0x8FCE00, description=msg)
-        await interaction.response.send_message(embed=embed)
+
+        if len(invalid_cookie_msg) > 0:
+            embed.description += f"\n{invalid_cookie_msg}"
+        await interaction.edit_original_response(embed=embed)
 
 
 class RedemptionCodeCog(commands.Cog, name="redeem-code"):
@@ -57,7 +85,7 @@ class RedemptionCodeCog(commands.Cog, name="redeem-code"):
         user: Optional[discord.User] = None,
     ):
         game_map = {"GENSHIN": genshin.Game.GENSHIN, "STARRAIL": genshin.Game.STARRAIL}
-        await RedeemCode.redeem(interaction, user or interaction.user, code, game_map[game])
+        await redeem(interaction, user or interaction.user, code, game_map[game])
 
 
 async def setup(client: commands.Bot):
@@ -66,9 +94,9 @@ async def setup(client: commands.Bot):
     @client.tree.context_menu(name="Redeem Code Genshin Impact")
     @custom_log.ContextCommandLogger
     async def context_redeem_genshin(interaction: discord.Interaction, msg: discord.Message):
-        await RedeemCode.redeem(interaction, interaction.user, msg.content, genshin.Game.GENSHIN)
+        await redeem(interaction, interaction.user, msg.content, genshin.Game.GENSHIN)
 
     @client.tree.context_menu(name="Redeem Code Starrail")
     @custom_log.ContextCommandLogger
     async def context_redeem_starrail(interaction: discord.Interaction, msg: discord.Message):
-        await RedeemCode.redeem(interaction, interaction.user, msg.content, genshin.Game.STARRAIL)
+        await redeem(interaction, interaction.user, msg.content, genshin.Game.STARRAIL)
