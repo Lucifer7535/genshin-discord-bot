@@ -1,7 +1,7 @@
 # GENSHIN DISCORD BOT
 Invite the Bot to your own server
 
-![https://discord.com/api/oauth2/authorize?client_id=1199307310980419605&permissions=2147765313&scope=bot%20applications.commands](https://dcbadge.vercel.app/api/shield/1199307310980419605?bot=true&style=flat&theme=discord-inverted)
+[![Badge](https://dcbadge.vercel.app/api/shield/1199307310980419605?bot=true&style=flat&theme=discord-inverted)](https://discord.com/api/oauth2/authorize?client_id=1199307310980419605&permissions=2147765313&scope=bot%20applications.commands)
 
 ## What does this bot do?
 This bot can be used to check various information from Genshin Impact, Honkai Impact 3rd & Honkai Star Rail directly in Discord channels, including:
