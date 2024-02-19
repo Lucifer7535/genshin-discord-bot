@@ -13,7 +13,7 @@ async def check_genshin_notes(user: GenshinScheduleNotes) -> CheckResult | None:
     try:
         notes = await get_realtime_notes(user)
     except Exception as e:
-        return CheckResult("An error occurred when bot automatically checked instant notes. Please check again after some time.", EmbedTemplate.error(e))
+        return CheckResult("An error occurred when bot automatically checked instant notes. Please check again after some time.", EmbedTemplate.error(e)) # noqa
 
     if not isinstance(notes, genshin.models.Notes):
         return None
@@ -82,7 +82,7 @@ async def check_threshold(user: GenshinScheduleNotes, notes: genshin.models.Note
             hours=user.threshold_expedition, seconds=10
         ):
             msg += (
-                "Exploration and dispatch are finished!" if longest_expedition.remaining_time <= timedelta(0) else "Exploartion and dispatch is about to be completed!"
+                "Exploration and dispatch are finished!" if longest_expedition.remaining_time <= timedelta(0) else "Exploartion and dispatch is about to be completed!" # noqa
             )
         next_check_time.append(
             datetime.now() + timedelta(hours=6)
