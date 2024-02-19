@@ -1,4 +1,4 @@
-from typing import Sequence, Union, List, Tuple
+from typing import Sequence, Union, Tuple, List
 
 import discord
 import genshin
@@ -130,6 +130,91 @@ async def parse_genshin_notes(
     *,
     user: Union[discord.User, discord.Member, None] = None,
     short_form: bool = False,
+) -> discord.Embed:
+    resin_title = f"{emoji.notes.resin}Current Original Resin: {notes.current_resin}/{notes.max_resin}\n"
+    if notes.current_resin >= notes.max_resin:
+        recover_time = "Already full!"
+    else:
+        day_msg = get_day_of_week(notes.resin_recovery_time)
+        recover_time = f'{day_msg} {notes.resin_recovery_time.strftime("%H:%M")}'
+    resin_msg = f"{emoji.notes.resin}Full recovery time: {recover_time}\n"
+    resin_msg += f"{emoji.notes.commission}Daily commission tasks:"
+    resin_msg += (
+        " Rewards claimed\n"
+        if notes.claimed_commission_reward is True
+        else "**Rewards not claimed yet**\n"
+        if notes.max_commissions == notes.completed_commissions
+        else f"{notes.max_commissions - notes.completed_commissions} commissions remaining\n"
+    )
+    if not short_form:
+        resin_msg += (
+            f"{emoji.notes.enemies_of_note}Weekly Boss Resin Discount: Remaining {notes.remaining_resin_discounts} times\n"
+        )
+    resin_msg += f"{emoji.notes.realm_currency}Current Realm Currency: {notes.current_realm_currency}/{notes.max_realm_currency}\n" # noqa
+    if not short_form and notes.max_realm_currency > 0:
+        if notes.current_realm_currency >= notes.max_realm_currency:
+            recover_time = "Already full!"
+        else:
+            day_msg = get_day_of_week(notes.realm_currency_recovery_time)
+            recover_time = f'{day_msg} {notes.realm_currency_recovery_time.strftime("%H:%M")}'
+        resin_msg += f"{emoji.notes.realm_currency}Realm Currency recovery time: {recover_time}\n"
+    if (t := notes.remaining_transformer_recovery_time) is not None:
+        if t.days > 0:
+            recover_time = f"{t.days} days remaining"
+        elif t.hours > 0:
+            recover_time = f"{t.hours} hours remaining"
+        elif t.minutes > 0:
+            recover_time = f"{t.minutes} minutes remaining"
+        elif t.seconds > 0:
+            recover_time = f"{t.seconds} seconds remaining"
+        else:
+            recover_time = "Available"
+        resin_msg += f"{emoji.notes.transformer}Parameteric Transformation Device: {recover_time}\n"
+
+    exped_finished = 0
+    exped_msg = ""
+    i = 1
+    for expedition in notes.expeditions:
+        exped_msg += f"．Character {i} - "
+        if expedition.finished:
+            exped_finished += 1
+            exped_msg += "Completed\n"
+        else:
+            i += 1
+            day_msg = get_day_of_week(expedition.completion_time)
+            exped_msg += f'{day_msg} {expedition.completion_time.strftime("%H:%M")}\n'
+
+    exped_title = f"{emoji.notes.expedition}Expedition Results: {exped_finished}/{len(notes.expeditions)}\n"
+
+    r = notes.current_resin
+    color = (
+        0x28C828 + 0x010000 * int(0xA0 * r / 80)
+        if r < 80
+        else 0xC8C828 - 0x000100 * int(0xA0 * (r - 80) / 80)
+    )
+    embed = discord.Embed(color=color)
+
+    if (not short_form) and (exped_msg != ""):
+        embed.add_field(name=resin_title, value=resin_msg)
+        embed.add_field(name=exped_title, value=exped_msg)
+    else:
+        embed.add_field(name=resin_title, value=(resin_msg + exped_title))
+
+    if user is not None:
+        _u = await Database.select_one(User, User.discord_id.is_(user.id))
+        uid = str(_u.uid_genshin if _u else "")
+        embed.set_author(
+            name=f"{get_server_name(uid[0])} {uid}",
+            icon_url=user.display_avatar.url,
+        )
+    return embed
+
+
+async def parse_genshin_notes_command(
+    notes: genshin.models.Notes,
+    *,
+    user: Union[discord.User, discord.Member, None] = None,
+    short_form: bool = False,
 ) -> Tuple[discord.Embed, List[discord.Embed]]:
     main_embed = None
     expedition_embeds = []
@@ -193,9 +278,10 @@ async def parse_genshin_notes(
             expedition_embeds.append(expedition_embed)
 
     expedition_summary = discord.Embed(color=0x28C828)
+    value = "Characters currently on expedition." if exped_finished == 0 else "Collect rewards in-game."
     expedition_summary.add_field(
         name=f"{emoji.notes.expedition} Expedition Completed：{exped_finished}/{len(notes.expeditions)}",
-        value="Collect rewards in-game.",
+        value=value,
         inline=False,
     )
 

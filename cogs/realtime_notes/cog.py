@@ -27,7 +27,7 @@ class RealtimeNotes:
                     defer, notes = await asyncio.gather(
                         interaction.response.defer(), genshin_py.get_genshin_notes(user.id)
                     )
-                    main_embed, expedition_embeds = await genshin_py.parse_genshin_notes(
+                    main_embed, expedition_embeds = await genshin_py.parse_genshin_notes_command(
                         notes, user=user, short_form=short_form
                     )
                 case genshin.Game.STARRAIL:
