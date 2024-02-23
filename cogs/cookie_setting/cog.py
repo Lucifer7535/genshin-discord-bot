@@ -25,22 +25,22 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
     async def slash_cookie(self, interaction: discord.Interaction, option: int):
         if option == 0:  # Show instructions on how to get Cookie
             embed1 = EmbedTemplate.normal(
-                "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) & [HoYoverse official Website](https://genshin.hoyoverse.com/en/gift) in an **incognito window** using your **computer** browser and log in to your account.\n" # noqa
+                "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) in an **incognito window** using your **computer** browser and log in to your account.\n" # noqa
                 "**2.** Press **F12** to open the browser developer tools.\n"
                 "**3.** Switch to the **Application** tab (refer to the image below).\n"
                 "**4.** Click on the URL under Cookies on the left, and you will see your Cookie on the right.\n"
-                "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2** in [HoYoLAB official website](https://www.hoyolab.com) & **account_id_v2**, **cookie_token_v2** in [HoYoverse official Website](https://genshin.hoyoverse.com/en/gift), and copy the values of these corresponding fields.\n" # noqa
+                "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2**,  **account_id_v2**, **cookie_token_v2** in [HoYoLAB official website](https://www.hoyolab.com), and copy the values of these corresponding fields.\n" # noqa
                 f"**6.** Use the command {get_app_command_mention('cookie-login')} here and paste the values into the corresponding fields.", # noqa
                 title="Genshin Discord Bot | Instructions for Obtaining Cookies",
             )
-            embed1.set_image(url="https://i.imgur.com/2JVM3ub.png")
+            embed1.set_image(url="https://i.imgur.com/hUUCwFj.png")
             await interaction.response.send_message(embed=embed1)
             embed2 = EmbedTemplate.normal(
-                "**7.** If you don't have access to a computer/laptop, you can use [Kiwi browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en&gl=US&pli=1) and do the steps as above message.\n" # noqa
+                "**7.** If you don't have access to a computer/laptop, you can use [Kiwi browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en&gl=US&pli=1).\n" # noqa
                 "**8.** See the below image on how to access developer tools on Android and get all cookie values.",
                 title="Genshin Discord Bot | Instructions for Obtaining Cookies (Kiwi Browser)",
             )
-            embed2.set_image(url="https://i.imgur.com/wceWJvG.png")
+            embed2.set_image(url="https://i.imgur.com/EUBXcyA.png")
             await interaction.followup.send(embed=embed2)
 
         elif option == 1:  # Submit obtained Cookie to the bot
