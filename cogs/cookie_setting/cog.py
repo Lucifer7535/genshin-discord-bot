@@ -25,11 +25,11 @@ class CookieSettingCog(commands.Cog, name="cookie-login"):
     async def slash_cookie(self, interaction: discord.Interaction, option: int):
         if option == 0:  # Show instructions on how to get Cookie
             embed1 = EmbedTemplate.normal(
-                "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) in an **incognito window** using your **computer** browser and log in to your account.\n" # noqa
+                "**1.** Open [HoYoLAB official website](https://www.hoyolab.com) & [HoYoverse official website](https://genshin.hoyoverse.com/en/gift) in an **incognito window** using your **computer** browser and log in to your account.\n" # noqa
                 "**2.** Press **F12** to open the browser developer tools.\n"
                 "**3.** Switch to the **Application** tab (refer to the image below).\n"
                 "**4.** Click on the URL under Cookies on the left, and you will see your Cookie on the right.\n"
-                "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2**,  **account_id_v2**, **cookie_token_v2** in [HoYoLAB official website](https://www.hoyolab.com), and copy the values of these corresponding fields.\n" # noqa
+                "**5.** Find **ltuid_v2**, **ltoken_v2**, **ltmid_v2** in [HoYoLAB official website](https://www.hoyolab.com) and **account_id_v2**, **cookie_token_v2** in [HoYoverse official website](https://genshin.hoyoverse.com/en/gift), and copy the values of these corresponding fields.\n" # noqa
                 f"**6.** Use the command {get_app_command_mention('cookie-login')} here and paste the values into the corresponding fields.", # noqa
                 title="Genshin Discord Bot | Instructions for Obtaining Cookies",
             )
